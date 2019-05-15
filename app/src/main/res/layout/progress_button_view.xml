@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edu.wgu.student.tomasgray.captstone.ui.views.ProgressButtonView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/percentage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large" />
+
+    <LinearLayout
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"></LinearLayout>
+</edu.wgu.student.tomasgray.captstone.ui.views.ProgressButtonView>

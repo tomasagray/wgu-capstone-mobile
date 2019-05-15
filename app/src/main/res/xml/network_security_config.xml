@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- Local -->
+        <domain includeSubdomains="true">10.0.0.5</domain>
+        <!-- Remote -->
+        <domain includeSubdomains="true">24.17.109.70</domain>
+    </domain-config>
+</network-security-config>
