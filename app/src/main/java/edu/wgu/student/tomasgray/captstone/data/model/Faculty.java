@@ -42,6 +42,9 @@ public class Faculty
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
     public String getEmail() {
         return email;
     }
@@ -50,6 +53,19 @@ public class Faculty
     }
     public String getPhone() {
         return phone;
+    }
+    public String getPhoneFormatted() {
+        StringBuilder sb = new StringBuilder();
+        // Format phone number String
+        sb
+            .append("(")
+            .append(phone.substring(0,3))
+            .append(") ")
+            .append(phone.substring(3,6))
+            .append("-")
+            .append(phone.substring(6,10));
+
+        return sb.toString();
     }
     public void setPhone(String phone) {
         this.phone = phone;
@@ -77,7 +93,7 @@ public class Faculty
         return
                 "Faculty ID: " + facultyId + "\n" +
                         "Name: " + firstName + " " + lastName + "\n" +
-                        "Phone: " + this.getPhone() + "\n" +
+                        "Phone: " + this.getPhoneFormatted() + "\n" +
                         "Email: " + email;
     }
 

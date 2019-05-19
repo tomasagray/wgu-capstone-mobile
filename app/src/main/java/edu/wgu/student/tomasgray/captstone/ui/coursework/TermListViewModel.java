@@ -14,7 +14,6 @@ import edu.wgu.student.tomasgray.captstone.data.model.Term;
 
 public class TermListViewModel extends AndroidViewModel
 {
-    private TermRepository termRepository;
     private LiveData<List<Term>> termList;
 
     public TermListViewModel(@NonNull Application application) {
@@ -29,13 +28,11 @@ public class TermListViewModel extends AndroidViewModel
      * @param termRepository
      * @return Number of Terms retrieved
      */
-    public void init(TermRepository termRepository)
-    {
-        this.termRepository = termRepository;
+    void init(TermRepository termRepository) {
         this.termList = termRepository.getTerms();
     }
 
-    public LiveData<List<Term>> getTermList() {
+    LiveData<List<Term>> getTermList() {
         return termList;
     }
 }

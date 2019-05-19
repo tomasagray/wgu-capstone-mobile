@@ -18,7 +18,7 @@ public class ProgressButtonView extends AppCompatButton
     private static final String LOG_TAG = "ProgButtonView";
 
 
-    private float percentage = 0.4f;
+    private int percentage;
     private Paint progressBarPaint;
     private Rect progressBar;
 
@@ -50,13 +50,11 @@ public class ProgressButtonView extends AppCompatButton
         // Resize progress bar
         if(progressBar != null)
             // TODO: Fix this
-            progressBar.set(computeProgressBarDimensions(60));
+            progressBar.set(computeProgressBarDimensions(percentage));
     }
 
     private void init()
     {
-//        this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-
         // Setup paint bucket
         progressBarPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         // Set color
@@ -65,27 +63,28 @@ public class ProgressButtonView extends AppCompatButton
         progressBarPaint.setStyle(Paint.Style.FILL);
         // Default (zeroed) progress bar
         // TODO: Fix this
-        progressBar = computeProgressBarDimensions(30);
+        progressBar = computeProgressBarDimensions(percentage);
     }
 
     private Rect computeProgressBarDimensions(int percent)
     {
         // Top of progress bar, relative to containing View,
         // minus padding
-        int top = getPaddingTop();
+        int top = getPaddingTop()/2;
         // Height of progress bar, accounting for padding (half)
-        int height = getHeight() - getPaddingTop()*2;
+        int height = getHeight() - getPaddingTop()/2;
         // Left of progress bar, relative to containing View,
         // minus padding
-        int left = getPaddingLeft();
+        int left = getPaddingLeft()/2;
         // Percent of the progess bar that is filled
         int progressWidth = (int)(getWidth() * (percent * 0.01f));
-
         return new Rect(left, top, progressWidth, height);
     }
 
-    public void setPercentage(float percentage) {
+    public void setPercentage(int percentage) {
         this.percentage = percentage;
+        // Redraw
+        init();
     }
 
 }

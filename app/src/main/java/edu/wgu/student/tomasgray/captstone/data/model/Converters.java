@@ -4,55 +4,29 @@ import android.util.Log;
 
 import androidx.room.TypeConverter;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Locale;
+import java.util.Date;
 import java.util.UUID;
 
 public class Converters
 {
     private static final String LOG_TAG = "Converters";
 
+    private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     // Dates
     // ---------------------------------------------------------------------------------
     @TypeConverter
-    public static LocalDate dateFromString(String date)
+    public static Date dateFromString(Long date)
     {
-        Log.i(LOG_TAG, "Converting String to LocalDate: " + date);
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-
-        // TODO: HACK! Delete this!
-        if("0000-00-00".equals(date)) {
-            return LocalDate.now();
-        }
-        try {
-            return
-                    (date == null) ? null :
-                            format
-                                    .parse(date)
-                                    .toInstant()
-                                    .atZone(ZoneId.systemDefault())
-                                    .toLocalDate();
-
-        } catch (ParseException e) {
-            Log.e(
-                    LOG_TAG,
-                    "Error parsing date: " + date
-                    +"Message: " + e.getMessage()
-            );
-
-            throw new RuntimeException(e);
-        }
+        Log.i(LOG_TAG, "Converting Long to Date: " + date);
+        return (date == null) ? null : new Date(date);
     }
 
     @TypeConverter
-    public static String dateToString(LocalDate date) {
-        Log.i(LOG_TAG, "Converting Localdate to String: " + date.toString());
-        return (date == null) ? null : date.toString();
+    public static Long dateToString(Date date) {
+        Log.i(LOG_TAG, "Converting Date to Long: " + date.getTime());
+        return (date == null) ? null : date.getTime();
     }
 
     // UUID
@@ -76,5 +50,16 @@ public class Converters
     @TypeConverter
     public static String statusToString(Course.Status status) {
         return (status == null) ? null : status.name();
+    }
+
+    // Assessment.AssessmentType
+    // -------------------------------------------------------------------------------
+    @TypeConverter
+    public static Assessment.AssessmentType typeFromString(String type) {
+        return (type == null) ? null : Assessment.AssessmentType.valueOf(type);
+    }
+    @TypeConverter
+    public static String typeToString(Assessment.AssessmentType type) {
+        return (type == null) ? null : type.name();
     }
 }

@@ -12,20 +12,24 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
-import java.util.UUID;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.List;
 
 import edu.wgu.student.tomasgray.captstone.R;
 import edu.wgu.student.tomasgray.captstone.data.access.TermRepository;
+import edu.wgu.student.tomasgray.captstone.data.model.Term;
 
 public class TermListActivity extends AppCompatActivity
     implements TermDetailFragment.OnFragmentInteractionListener
 {
-    private static final String LOG_TAG = "TermDetailActiv";
+    private static final String LOG_TAG = "TermListActivity";
 
     private TermListViewModel viewModel;
     private ViewPager termViewPager;
+    private TabLayout pagerTabs;
     private TermSlidePagerAdapter pagerAdapter;
-    private int termCount;
+    private List<Term> termList;
 
     @Override
     public void onBackPressed() {
@@ -47,22 +51,24 @@ public class TermListActivity extends AppCompatActivity
         getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);
 
-        // Attach ViewModel
-        this.viewModel = ViewModelProviders.of(this).get(TermListViewModel.class);
-        viewModel.init(TermRepository.getInstance(getBaseContext()));
-
-        // Observe data
-        viewModel.getTermList().observe(this, terms -> {
-            // TODO: Get some data!
-            Log.i(LOG_TAG, "Term count: " + terms.size());
-            termCount = terms.size();
-            pagerAdapter.notifyDataSetChanged();
-        });
-
         // Setup ViewPager
+        // -------------------------------------------------------------------
         this.termViewPager = findViewById(R.id.termViewPager);
         this.pagerAdapter = new TermSlidePagerAdapter(getSupportFragmentManager());
         termViewPager.setAdapter(pagerAdapter);
+        // Setup tabs
+        this.pagerTabs = findViewById(R.id.pagerTabs);
+        pagerTabs.setupWithViewPager(termViewPager);
+
+        // Attach ViewModel
+        // -------------------------------------------------------------------
+        this.viewModel = ViewModelProviders.of(this).get(TermListViewModel.class);
+        viewModel.init(TermRepository.getInstance(getBaseContext()));
+        // Observe data
+        viewModel.getTermList().observe(this, terms -> {
+            termList = terms;
+            pagerAdapter.notifyDataSetChanged();
+        });
     }
 
     @Override
@@ -77,10 +83,19 @@ public class TermListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onProgressButtonClick(UUID termId) {
-        Log.i(LOG_TAG, "Progress button clicked, ID: " + termId.toString());
+    public void onAttachFragment(Fragment fragment)
+    {
+        // Attach to Fragment interaction events
+        if(fragment instanceof TermDetailFragment) {
+            TermDetailFragment detailFragment = (TermDetailFragment)fragment;
+            detailFragment.setFragmentInteractionListener(this);
+        }
     }
 
+    @Override
+    public void onProgressButtonClick() {
+        // Empty method; take no action from this Activity
+    }
 
     /**
      * Pager adapter class for ViewPager
@@ -93,12 +108,12 @@ public class TermListActivity extends AppCompatActivity
 
         @Override
         public Fragment getItem(int position) {
-            return new TermDetailFragment();
+            return TermDetailFragment.newFragment( termList.get(position).getTermId() );
         }
 
         @Override
         public int getCount() {
-            return termCount;
+            return (termList == null) ? 0 : termList.size();
         }
     }
 

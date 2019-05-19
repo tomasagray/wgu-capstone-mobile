@@ -1,31 +1,63 @@
 package edu.wgu.student.tomasgray.captstone.ui.coursework;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.LocalDate;
-import java.util.Arrays;
+import java.time.Instant;
+import java.util.Date;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 
 import edu.wgu.student.tomasgray.captstone.R;
 import edu.wgu.student.tomasgray.captstone.data.access.TermRepository;
+import edu.wgu.student.tomasgray.captstone.ui.views.ProgressButtonView;
 
 public class OverviewFragment extends Fragment
+    implements TermDetailFragment.OnFragmentInteractionListener
 {
     private static final String LOG_TAG = "OverviewFrag";
 
 
     private OverviewViewModel viewModel;
     private TermDetailViewModel termDetailViewModel;
+    private UUID termId;   // GUI
+    // --------------------------------------------
+    private TextView termLabel;
+    private TextView daysLeft;
+    private TextView startDate;
+    private TextView endDate;
+    private ProgressButtonView termProgressBar;
+    private RecyclerView courseList;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+        // Get current term
+        // TODO: GET THIS WORKING!
+        Executors.newSingleThreadExecutor().execute(() -> {
+            Cursor cursor = TermRepository.getInstance(getContext()).getCurrentTerm(Date.from(Instant.now()));
+            if( cursor.getCount() > 0 ) {
+                Log.i(LOG_TAG, "Current term: got results(#): " + cursor.getCount());
+                cursor.moveToNext();
+                Log.i(LOG_TAG, "termId for current term: " + cursor.getString(cursor.getColumnIndex("termId")));
+                String id = cursor.getString(cursor.getColumnIndex("termId"));
+                termId = UUID.fromString(id);
+            }
+        });
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -55,21 +87,21 @@ public class OverviewFragment extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
 
-        // Initialize the ViewModels
-        viewModel = ViewModelProviders.of(getActivity()).get(OverviewViewModel.class);
-        viewModel.init();
-        termDetailViewModel = ViewModelProviders.of(getActivity()).get(TermDetailViewModel.class);
+    @Override
+    public void onAttachFragment(Fragment fragment)
+    {
+        if(fragment instanceof TermDetailFragment) {
+            TermDetailFragment detailFragment = (TermDetailFragment)fragment;
+            detailFragment.setFragmentInteractionListener(this);
+        }
+    }
 
-        // Get current course
-        Executors.newSingleThreadExecutor().execute(() -> {
-            Cursor termId = TermRepository.getInstance(getContext()).getCurrentTerm(LocalDate.now());
-            if( termId.getCount() > 0 ) {
-                Log.i(LOG_TAG, Arrays.toString(termId.getColumnNames()));
-                Log.i(LOG_TAG, termId.getColumnCount() + "");
-                termId.moveToNext();
-                Log.i(LOG_TAG, "termId for current term: " + termId.getString(termId.getColumnIndex("termId")));
-            }
-        });
+    @Override
+    public void onProgressButtonClick() {
+        Log.i(LOG_TAG, "Click in overview");
+        Intent intent = new Intent(getContext(), TermListActivity.class);
+        startActivityForResult(intent, 0);
     }
 }

@@ -7,7 +7,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Executor;
@@ -64,8 +64,6 @@ public class TermRepository
     public LiveData<Term> getTerm(UUID termId)
     {
         Log.i(LOG_TAG, "Fetching data for term: " + termId.toString());
-        Log.i(LOG_TAG, "Data: " + termDao.load(termId).getValue());
-
         // Get fresh data
         refreshTermData();
         // Load term data
@@ -80,7 +78,7 @@ public class TermRepository
         return termDao.loadAll();
     }
 
-    public Cursor getCurrentTerm(final LocalDate now)
+    public Cursor getCurrentTerm(final Date now)
     {
         // Refresh local DB
         refreshTermData();

@@ -2,28 +2,28 @@ package edu.wgu.student.tomasgray.captstone.data.model;
 
 public class Topic
 {
-    private char headerFlag;
+    private String headerFlag;
     private String title;
     private String topicText;
 
     public Topic() {}
-    public Topic(char headerFlag) {
+    public Topic(String headerFlag) {
         this.headerFlag = headerFlag;
     }
-    public Topic(char headerFlag, String title) {
+    public Topic(String headerFlag, String title) {
         this(headerFlag);
         this.title = title;
     }
-    public Topic(char headerFlag, String title, String topicText) {
+    public Topic(String headerFlag, String title, String topicText) {
         this(headerFlag, title);
         this.topicText = topicText;
     }
 
-    public char getHeaderFlag() {
+    public String getHeaderFlag() {
         return headerFlag;
     }
 
-    public void setHeaderFlag(char headerFlag) {
+    public void setHeaderFlag(String headerFlag) {
         this.headerFlag = headerFlag;
     }
 
@@ -41,5 +41,13 @@ public class Topic
 
     public void setTopicText(String topicText) {
         this.topicText = topicText;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "Flag: " + getHeaderFlag() +"\n" +
+                        "Title: " + getTitle() + "\n" +
+                        "Text: " + getTopicText();
     }
 }

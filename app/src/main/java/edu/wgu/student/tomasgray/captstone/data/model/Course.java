@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -38,8 +38,8 @@ public class Course
     private String courseNumber;
     private int credits;
 //    @TypeConverters(Converters.class)
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
     private Status status;
     private UUID termId;
 
@@ -59,8 +59,8 @@ public class Course
         this(id, title);
         this.courseNumber = courseNumber;
     }
-    public Course(UUID id, String title, String courseNumber, int credits, LocalDate startDate,
-                  LocalDate endDate, Status status)
+    public Course(UUID id, String title, String courseNumber, int credits, Date startDate,
+                  Date endDate, Status status)
     {
         this(id, title, courseNumber);
         this.credits = credits;
@@ -95,16 +95,16 @@ public class Course
     public void setCredits(int credits) {
         this.credits = credits;
     }
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
     public Status getStatus() {

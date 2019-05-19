@@ -6,59 +6,66 @@
     android:layout_height="match_parent"
     tools:context=".ui.coursework.OverviewFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/userAvatar"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/user_image"
-            android:src="@drawable/ic_user"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/userNameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/placeholder_text"
-            android:textAppearance="@style/UserName"
-            app:layout_constraintEnd_toEndOf="@+id/userAvatar"
-            app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
+            <ImageView
+                android:id="@+id/userAvatar"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/user_image"
+                android:src="@drawable/ic_user"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <fragment
-            android:id="@+id/fragment"
-            android:name="edu.wgu.student.tomasgray.captstone.ui.coursework.TermDetailFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userNameText" />
+            <TextView
+                android:id="@+id/userNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/placeholder_text"
+                android:textAppearance="@style/UserName"
+                app:layout_constraintEnd_toEndOf="@+id/userAvatar"
+                app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
 
-        <TextView
-            android:id="@+id/welcomeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Welcome,"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/userAvatar"
-            app:layout_constraintStart_toStartOf="@+id/userAvatar"
-            app:layout_constraintTop_toBottomOf="@+id/userAvatar" />
+            <fragment
+                android:id="@+id/currentTermFragment"
+                android:name="edu.wgu.student.tomasgray.captstone.ui.coursework.TermDetailFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="64dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userNameText" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/welcomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/welcome"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/userAvatar"
+                app:layout_constraintStart_toStartOf="@+id/userAvatar"
+                app:layout_constraintTop_toBottomOf="@+id/userAvatar" />
 
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
 </FrameLayout>

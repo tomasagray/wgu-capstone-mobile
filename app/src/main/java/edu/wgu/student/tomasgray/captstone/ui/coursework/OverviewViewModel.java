@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.UUID;
 
 import edu.wgu.student.tomasgray.captstone.data.access.CourseRepository;
 import edu.wgu.student.tomasgray.captstone.data.access.TermRepository;
@@ -27,6 +28,21 @@ public class OverviewViewModel extends AndroidViewModel
 
     public OverviewViewModel(@NonNull Application application) {
         super(application);
+        // Save repo reference
+        this.courseRepo = CourseRepository.getInstance(getApplication());
+        this.termRepo = TermRepository.getInstance(getApplication());
+    }
+
+    void init(UUID termId)
+    {
+        if (this.courses != null && this.term != null) {
+            return;
+        }
+
+        // Get Term LiveData
+        term = termRepo.getTerm(termId);
+        // Get Course LiveData
+        courses = courseRepo.getCoursesForTerm(termId);
     }
 
     public LiveData<List<Course>> getCourses() {
@@ -36,20 +52,4 @@ public class OverviewViewModel extends AndroidViewModel
         return term;
     }
 
-    void init()
-    {
-        if (this.courses != null && this.term != null) {
-            return;
-        }
-
-        // Save repo reference
-        this.courseRepo = CourseRepository.getInstance(getApplication());
-        this.termRepo = TermRepository.getInstance(getApplication());
-        // Get LiveData
-        /*term = termRepo.getCurrentTerm(LocalDate.now());
-        Log.i(LOG_TAG, "Term value: " + term.getValue());
-
-        if(term.getValue() != null)
-           courses = courseRepo.getCoursesForTerm( term.getValue().getTermId() );*/
-    }
 }

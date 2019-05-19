@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +15,9 @@ public class Assessment
 {
 
     public enum AssessmentType {
+        @SerializedName("objective")
         OBJECTIVE,
+        @SerializedName("performance")
         PERFORMANCE
     }
 
@@ -25,10 +27,8 @@ public class Assessment
     private final UUID id;
     private String title;
     private AssessmentType type;
-    @SerializedName("start_date")
-    private LocalDate startDate;
-    @SerializedName("end_date")
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
 
 
     // Constructors
@@ -42,12 +42,12 @@ public class Assessment
         this.title = title;
     }
     @Ignore
-    public Assessment(UUID id, String title, LocalDate startDate) {
+    public Assessment(UUID id, String title, Date startDate) {
         this(id, title);
         this.startDate = startDate;
     }
     // Used by Room
-    public Assessment(UUID id, String title, LocalDate startDate, LocalDate endDate) {
+    public Assessment(UUID id, String title, Date startDate, Date endDate) {
         this(id, title, startDate);
         this.endDate = endDate;
     }
@@ -69,16 +69,16 @@ public class Assessment
     public void setType(AssessmentType type) {
         this.type = type;
     }
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

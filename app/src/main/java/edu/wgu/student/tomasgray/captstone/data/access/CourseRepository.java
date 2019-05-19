@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Executor;
@@ -75,7 +75,7 @@ public class CourseRepository
         return courseDao.loadAll();
     }
 
-    public LiveData<List<Course>> getCurrentCourses(final LocalDate now)
+    public LiveData<List<Course>> getCurrentCourses(final Date now)
     {
         // Refresh local DB
         refreshAllCourseData();
@@ -143,18 +143,14 @@ public class CourseRepository
                         = webservice
                             .getAllCourses()
                             .execute();
-                // Extract response
-                List<Course> courses = response.body();
 
                 // TODO: Implement validation
-                Log.i(LOG_TAG, "Retrieved: " + courses.size());
 
-                courses.forEach((c) -> {
-                    Log.i(LOG_TAG, "Course from list:\n" + c.toString());
+                // Extract response
+                List<Course> courses = response.body();
+                // Save each course to local DB
+                courses.forEach(courseDao::save);
 
-                    // Save course to local DB
-                    courseDao.save(c);
-                });
             } catch (IOException | RuntimeException e) {
                 Log.e(
                         LOG_TAG,

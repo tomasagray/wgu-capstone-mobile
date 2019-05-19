@@ -28,6 +28,10 @@ public class TermDetailViewModel extends AndroidViewModel
 
     public TermDetailViewModel(@NonNull Application application) {
         super(application);
+
+        // Initialize repos
+        this.termRepository = TermRepository.getInstance(getApplication());
+        this.courseRepository = CourseRepository.getInstance(getApplication());
     }
 
     void init(UUID termId)
@@ -38,23 +42,22 @@ public class TermDetailViewModel extends AndroidViewModel
             return;
         }
 
-        // Initialize repos
-        this.termRepository = TermRepository.getInstance(getApplication());
-        this.courseRepository = CourseRepository.getInstance(getApplication());
 
         this.term = termRepository.getTerm(termId);
-        this.courses = courseRepository.getCoursesForTerm(termId);
+        // TODO: FIX THIS!
+//        this.courses = courseRepository.getCoursesForTerm(termId);
+        this.courses = courseRepository.getAllCourses();
 
         Log.i(LOG_TAG, "Term value: " + term.getValue());
     }
 
     public LiveData<Term> getTerm() {
-        Log.i(LOG_TAG, "Term value: " + term.getValue());
+//        Log.i(LOG_TAG, "Term value: " + ((term == null) ? "nuLL" : term.getValue().toString()));
         return term;
     }
 
     public LiveData<List<Course>> getCourses() {
-        Log.i(LOG_TAG, "Courses are: " + courses.getValue());
+//        Log.i(LOG_TAG, "Courses are: " + ((courses != null) ? "nuLL" : courses.getValue()));
         return courses;
     }
 }

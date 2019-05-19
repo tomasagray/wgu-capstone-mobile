@@ -5,9 +5,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.time.LocalDate;
-import java.time.Period;
+import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 
 @Entity
@@ -17,8 +17,8 @@ public class Term
     @NonNull
     private final UUID termId;
     private String title;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
 
 
     // Constructors
@@ -33,12 +33,12 @@ public class Term
         this.title = title;
     }
     @Ignore
-    public Term(UUID termId, String title, LocalDate start) {
+    public Term(UUID termId, String title, Date start) {
         this(termId, title);
         this.startDate = start;
     }
     // Used by Room
-    public Term(UUID termId, String title, LocalDate startDate, LocalDate endDate) {
+    public Term(UUID termId, String title, Date startDate, Date endDate) {
         this(termId, title, startDate);
         this.endDate = endDate;
     }
@@ -55,22 +55,23 @@ public class Term
     public void setTitle(String title) {
         this.title = title;
     }
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
     // Computer difference between now and the end of the term
     public int getDaysLeft() {
-        Period period = Period.between(LocalDate.now(), this.endDate);
-        return period.getDays();
+        long diff = Math.abs(this.endDate.getTime() - new Date().getTime());
+        return
+                (int)TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
     @Override

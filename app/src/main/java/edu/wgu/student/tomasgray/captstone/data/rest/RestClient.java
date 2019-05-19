@@ -15,10 +15,6 @@ import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Locale;
 
@@ -43,18 +39,16 @@ public class RestClient
     private static Gson gsonDateFormatter()
     {
         final GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
+        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
             final DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             @Override
-            public LocalDate deserialize(JsonElement json, Type typeOfT,
-                                         JsonDeserializationContext context) throws JsonParseException {
+            public Date deserialize(JsonElement json, Type typeOfT,
+                                         JsonDeserializationContext context) throws JsonParseException
+            {
+                Log.i(LOG_TAG, "Deserializing JSON: " + json.getAsString());
+
                 try {
-                    Date date = format.parse(json.getAsString());
-                    Instant instant = date.toInstant();
-                    ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
-                    LocalDate localDate = zonedDateTime.toLocalDate();
-                    Log.i(LOG_TAG, "LocalDate: (y): " + localDate.getYear() + ", (m): " + localDate.getMonth() + ", (d): "+ localDate.getDayOfMonth());
-                    return localDate;
+                    return format.parse(json.getAsString());
 
                 } catch (ParseException e) {
                     Log.e(LOG_TAG, "Error parsing JSON: " + json.getAsString());

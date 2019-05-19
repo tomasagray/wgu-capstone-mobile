@@ -36,21 +36,21 @@ public class FacultyOverviewFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
         super.onActivityCreated(savedInstanceState);
 
         // Setup faculty list RecyclerView
         facultyList = getActivity().findViewById(R.id.facultyList);
         facultyList.setLayoutManager( new LinearLayoutManager(getContext()));
-        FacultyListAdapter facultyListAdapter = new FacultyListAdapter();
+        FacultyListAdapter facultyListAdapter = new FacultyListAdapter( getActivity() );
         facultyList.setAdapter(facultyListAdapter);
 
         // TODO: Use the ViewModel
         facultyViewModel = ViewModelProviders.of(this).get(FacultyOverviewViewModel.class);
         facultyViewModel.init();
-        if(facultyViewModel.getFaculty().getValue() != null) {
-            facultyViewModel.getFaculty().observe(this, facultyListAdapter::setData);
-        }
+        facultyViewModel.getFaculty().observe(this, facultyListAdapter::setData);
+
     }
 
 }

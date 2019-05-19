@@ -1,5 +1,7 @@
 package edu.wgu.student.tomasgray.captstone.ui.faculty;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +16,19 @@ import java.util.List;
 import edu.wgu.student.tomasgray.captstone.R;
 import edu.wgu.student.tomasgray.captstone.data.model.Faculty;
 
+import static edu.wgu.student.tomasgray.captstone.ui.faculty.FacultyDetailsActivity.ARG_FACULTY_ID;
+
 public class FacultyListAdapter extends RecyclerView.Adapter<FacultyListAdapter.FacultyViewHolder>
 {
     private static final String LOG_TAG = "FacultyAdapter";
 
 
     private List<Faculty> faculty;
+    private Context context;
+
+    FacultyListAdapter(Context context) {
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -42,8 +51,20 @@ public class FacultyListAdapter extends RecyclerView.Adapter<FacultyListAdapter.
         if(member != null) {
             String name = member.getFirstName() + " " + member.getLastName();
             holder.facultyName.setText(name);
-            holder.facultyPhone.setText(member.getPhone());
+            holder.facultyPhone.setText(member.getPhoneFormatted());
             holder.facultyEmail.setText(member.getEmail());
+            holder.facultyCard.setOnClickListener(v -> {
+                Log.i(
+                        LOG_TAG,
+                        "Faculty card clicked for ID: " +
+                                member.getFacultyId().toString()
+                );
+
+                // Start faculty details activity
+                Intent intent = new Intent(context, FacultyDetailsActivity.class);
+                intent.putExtra(ARG_FACULTY_ID, member.getFacultyId().toString());
+                context.startActivity(intent);
+            });
         }
     }
 
@@ -68,6 +89,7 @@ public class FacultyListAdapter extends RecyclerView.Adapter<FacultyListAdapter.
      */
     public static class FacultyViewHolder extends RecyclerView.ViewHolder
     {
+        View facultyCard;
         TextView facultyName;
         TextView facultyPhone;
         TextView facultyEmail;
@@ -75,10 +97,10 @@ public class FacultyListAdapter extends RecyclerView.Adapter<FacultyListAdapter.
         public FacultyViewHolder(@NonNull View itemView) {
             super(itemView);
             // Attach Views
+            facultyCard = itemView;
             facultyName = itemView.findViewById(R.id.facultyName);
             facultyPhone = itemView.findViewById(R.id.facultyPhone);
             facultyEmail = itemView.findViewById(R.id.facultyEmail);
-
         }
     }
 }

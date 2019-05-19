@@ -1,6 +1,6 @@
 package edu.wgu.student.tomasgray.captstone.ui.coursework;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,28 +13,39 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import edu.wgu.student.tomasgray.captstone.R;
 import edu.wgu.student.tomasgray.captstone.data.model.Course;
+import edu.wgu.student.tomasgray.captstone.data.model.CourseUtils;
 import edu.wgu.student.tomasgray.captstone.data.model.Term;
+import edu.wgu.student.tomasgray.captstone.data.model.Topic;
 import edu.wgu.student.tomasgray.captstone.ui.views.ProgressButtonView;
+import edu.wgu.student.tomasgray.captstone.ui.views.TopicButtonAdapter;
 
 
 public class TermDetailFragment extends Fragment
+    implements TopicButtonAdapter.OnAdapterInteractionListener
 {
     private static final String LOG_TAG = "TermDetailFrag";
     // Passed in to identify the specific Term this
     // fragment represents
     private static final String ARG_TERM_ID = "termId";
 
+    // Interaction listener
+    private OnFragmentInteractionListener callback;
+
     // Data
     // ---------------------------------------------
     private UUID termId;
+    private List<Course> courseList;
     // ViewModel
     private TermDetailViewModel viewModel;
 
@@ -45,8 +56,7 @@ public class TermDetailFragment extends Fragment
     private TextView startDate;
     private TextView endDate;
     private ProgressButtonView termProgressBar;
-    // GUI Listener
-    private OnFragmentInteractionListener listener;
+    private RecyclerView courseListRecycler;
 
 
 
@@ -67,18 +77,29 @@ public class TermDetailFragment extends Fragment
     }
 
 
+    public void setFragmentInteractionListener(OnFragmentInteractionListener callback) {
+        this.callback = callback;
+    }
+
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onProgressButtonClick();
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+//        viewModel = ViewModelProviders.of(this).get(TermDetailViewModel.class);
         if(getArguments() != null) {
             // Get the term ID passed in
             Log.i(LOG_TAG, "getArguments not null: " + getArguments().getString(ARG_TERM_ID));
             termId = UUID.fromString( getArguments().getString(ARG_TERM_ID) );
         } else {
             Log.i(LOG_TAG, "Fragment was created with null arguments");
-            termId = UUID.fromString("34a643a5-d62a-432e-a09d-c2a19e0c63b1");
+//            termId = UUID.fromString("34a643a5-d62a-432e-a09d-c2a19e0c63b1");
         }
     }
 
@@ -100,82 +121,95 @@ public class TermDetailFragment extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
+        Log.i(LOG_TAG, "Termdetailfrag activity created");
+        initializeGui();
+        initializeViewModel();
+    }
 
-        // Initialize ViewModel
-        viewModel = ViewModelProviders.of(this).get(TermDetailViewModel.class);
-        // TODO: Get from container
-        viewModel.init( termId );
 
+    /**
+     * For course list recycler
+     * @param position Which item in the RecyclerView was clicked
+     */
+    @Override
+    public void onItemClick(int position) {
+        // Get the Course from the List
+        Course course = courseList.get(position);
+        // Setup intent
+        Intent intent = new Intent(getContext(), CourseDetailActivity.class);
+        intent.putExtra(CourseDetailActivity.ARG_COURSE_ID, course.getId().toString());
+        // Start activity
+        startActivityForResult(intent, 0);
+    }
+
+
+    private void initializeGui()
+    {
         // Attach GUI components
-        termLabel = getActivity().findViewById(R.id.termLabel);
-        daysLeft  = getActivity().findViewById(R.id.daysLeftCounterText);
-        startDate = getActivity().findViewById(R.id.termStartDateText);
-        endDate   = getActivity().findViewById(R.id.termEndDateText);
-        termProgressBar = getActivity().findViewById(R.id.termProgressButton);
-        // Handle progress bar interaction
-        termProgressBar.setOnClickListener(v -> {
-            if(listener != null)
-                listener.onProgressButtonClick(termId);
-        });
+        termLabel = getView().findViewById(R.id.termLabel);
+        daysLeft  = getView().findViewById(R.id.daysLeftCounterText);
+        startDate = getView().findViewById(R.id.termStartDateText);
+        endDate   = getView().findViewById(R.id.termEndDateText);
+        termProgressBar = getView().findViewById(R.id.termProgressButton);
+        termProgressBar.setOnClickListener(v -> callback.onProgressButtonClick());
+        // Setup course list
+        courseListRecycler = getView().findViewById(R.id.courseListRecycler);
+        TopicButtonAdapter adapter = new TopicButtonAdapter();
+        adapter.setAdapterInteractionListener(this);
+        courseListRecycler.setAdapter( adapter );
+        courseListRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    private void initializeViewModel()
+    {
+        // Initialize ViewModel
+        // TODO: FIX THIS!
+        if(termId != null) {
+            Log.i(LOG_TAG, "Term ID is not null! ID: " + termId.toString());
+            viewModel = ViewModelProviders.of(this).get(termId.toString(), TermDetailViewModel.class);
+            viewModel.init(termId);
+        } else {
+            Log.i(LOG_TAG, "termId is still null!");
+            viewModel = ViewModelProviders.of(this).get(TermDetailViewModel.class);
+//            viewModel.init(UUID.fromString("34a643a5-d62a-432e-a09d-c2a19e0c63b1"));
+        }
 
         // Observe data
         LiveData<Term> term = viewModel.getTerm();
-        if(term.getValue() != null) {
-            term.observe(this, t -> {
+        if(term != null) {
+            term.observe(this, termData -> {
                 // Format data
-                String days = t.getDaysLeft() + "";
+                String days = termData.getDaysLeft() + "";
                 SimpleDateFormat formatter = new SimpleDateFormat("MM/dd", Locale.US);
-                String start = formatter.format(t.getStartDate());
-                String end = formatter.format(t.getEndDate());
+                String start = formatter.format(termData.getStartDate());
+                String end = formatter.format(termData.getEndDate());
 
                 // Attach data to GUI
-                termLabel.setText(t.getTitle());
+                termLabel.setText(termData.getTitle());
                 daysLeft.setText(days);
                 startDate.setText(start);
                 endDate.setText(end);
+//                termProgressBar.setPercentage();
 
                 // Save term ID
-                termId = t.getTermId();
+                termId = termData.getTermId();
             });
-        } else {
-            Log.i(LOG_TAG, "Term LiveData was null!");
         }
 
         LiveData<List<Course>> courses = viewModel.getCourses();
         if(courses != null) {
-            courses.observe(this, courseList -> {
+            courses.observe(this, cl -> {
                 // TODO: More stuff
-                Log.i(LOG_TAG, "courseList is: " + courseList);
+                // Update courses list
+                courseList = cl;
+                // Convert to List of Topics
+                List<Topic> topicList
+                        = cl.stream()
+                            .map(CourseUtils::convertToTopic)
+                            .collect(Collectors.toList());
+                ((TopicButtonAdapter) courseListRecycler.getAdapter())
+                        .setData(topicList);
             });
         }
-    }
-
-    @Override
-    public void onAttach(Context context)
-    {
-        super.onAttach(context);
-        Log.i(LOG_TAG, "Context: " + context);
-
-        // Ensure interaction interface implemented in activity
-        if(context instanceof OnFragmentInteractionListener) {
-            listener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(
-                    context.toString()
-                    + " must implement OnFragmentInteractionListener"
-            );
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        // Release listener
-        listener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onProgressButtonClick(UUID termId);
     }
 }

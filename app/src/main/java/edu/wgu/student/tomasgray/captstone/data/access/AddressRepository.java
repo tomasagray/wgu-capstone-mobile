@@ -18,9 +18,10 @@ public class AddressRepository
     private static volatile AddressRepository INSTANCE;
     public static AddressRepository getInstance(Context context) {
         if(INSTANCE == null) {
-            AddressRepository repository
-                    = AddressRepository
-                        .getInstance(context);
+            AddressDao addressDao
+                    = AddressDatabase
+                        .getInstance(context)
+                        .addressDao();
             AddressWebService webService
                     = RestClient
                         .getInstance()
@@ -28,7 +29,7 @@ public class AddressRepository
             ExecutorService executor
                     = Executors.newCachedThreadPool();
 
-            INSTANCE = new AddressRepository(repository, webService, executor);
+            INSTANCE = new AddressRepository(addressDao, webService, executor);
         }
 
         return INSTANCE;
@@ -36,13 +37,13 @@ public class AddressRepository
 
     // Fields
     // --------------------------------------------------
-    private AddressRepository repository;
+    private AddressDao addressDao;
     private AddressWebService webService;
     private Executor executor;
 
     // Constructor
-    private AddressRepository(AddressRepository repository, AddressWebService webService, Executor executor) {
-        this.repository = repository;
+    private AddressRepository(AddressDao dao, AddressWebService webService, Executor executor) {
+        this.addressDao = dao;
         this.webService = webService;
         this.executor = executor;
     }

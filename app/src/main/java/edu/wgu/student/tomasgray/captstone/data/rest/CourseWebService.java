@@ -23,6 +23,7 @@ public interface CourseWebService
     @GET("courses/{course}")
     Call<Course> getCourse(@Path("course") String courseId);
 
+    // TODO: Delete me
     @GET("courses/{course}")
     Call<ResponseBody> getCourseResponse(@Path("course") String courseId);
 
