@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.UUID;
 
@@ -92,9 +94,14 @@ public class AssessmentDetailActivity extends AppCompatActivity
         viewModel = ViewModelProviders.of(this).get(AssessmentDetailViewModel.class);
         viewModel.init(assessmentId);
         viewModel.getAssessment().observe(this, assessment -> {
+            // Format date
+            String date
+                    = assessment
+                        .getStartDate()
+                        .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
             // Update top-level GUI
             assessmentTitle.setText(assessment.getTitle());
-            assessmentDate.setText(assessment.getStartDate().toString());
+            assessmentDate.setText(date);
             assessmentType.setText(assessment.getType().name().toUpperCase());
             // Update RecyclerView adapter data
             ((AssessmentItemAdapter)itemsList.getAdapter())

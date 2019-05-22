@@ -32,9 +32,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:tabGravity="center"
-        app:tabIndicator="@drawable/tab_selector"
+        app:tabBackground="@drawable/tab_selector"
         app:tabIndicatorGravity="center"
-        app:tabIndicatorHeight="32dp">
+        app:tabIndicatorHeight="0dp">
 
     </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -67,15 +67,15 @@ public class Assessment
     private final UUID id;
     private String title;
     private AssessmentType type;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     @SerializedName("items")
     private List<AssessmentItem> assessmentItems;
 
 
     // Constructors
     @Ignore
-    public Assessment(UUID id) {
+    public Assessment(@NonNull UUID id) {
         this.id = id;
     }
     @Ignore
@@ -84,18 +84,19 @@ public class Assessment
         this.title = title;
     }
     @Ignore
-    public Assessment(UUID id, String title, Date startDate) {
+    public Assessment(UUID id, String title, LocalDate startDate) {
         this(id, title);
         this.startDate = startDate;
     }
     // Used by Room
-    public Assessment(UUID id, String title, Date startDate, Date endDate) {
+    public Assessment(UUID id, String title, LocalDate startDate, LocalDate endDate) {
         this(id, title, startDate);
         this.endDate = endDate;
     }
 
     // Getters & Setters
     // --------------------------------------------------------------
+    @NonNull
     public UUID getId() {
         return id;
     }
@@ -111,16 +112,16 @@ public class Assessment
     public void setType(AssessmentType type) {
         this.type = type;
     }
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
     public List<AssessmentItem> getAssessmentItems() {

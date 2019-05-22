@@ -5,19 +5,20 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class CourseUtils
 {
     private static final String LOG_TAG = "CourseUtils";
 
+    // TODO: Rethink this class
 
     private static SimpleDateFormat shortFormatter
             = new SimpleDateFormat("MM/dd", Locale.US);
 
-    public static String getShortDate(@NonNull Date date) {
+    public static String getShortDate(@NonNull LocalDate date) {
         return shortFormatter.format(date);
     }
 
@@ -25,31 +26,25 @@ public class CourseUtils
         return course.getCredits() + " credits";
     }
 
-    public static int getDaysLeft(@NonNull Course course)
+    private static int getDaysLeft(@NonNull Course course)
     {
-
-        // Compare to current date
-        long diff =
-                // End date
-                course.getEndDate().getTime()
-                // vs.     now
-              - new Date().getTime();
         return
-                (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+                Period
+                    .between(LocalDate.now(), course.getEndDate())
+                    .getDays();
     }
-
 
     public static String getDaysLeftString(@NonNull Course course) {
         return getDaysLeft(course) + "";
     }
 
-    public static int getCourseLength(@NonNull Course course)
+    private static int getCourseLength(@NonNull Course course)
     {
-        long courseLength =
-                    course.getEndDate().getTime()
-                    - course.getStartDate().getTime();
         return
-                (int) TimeUnit.DAYS.convert(courseLength, TimeUnit.MILLISECONDS);
+                Period
+                    .between(course.getStartDate(), course.getEndDate())
+                    .getDays();
+
     }
 
     public static int getPercentComplete(@NonNull Course course)
@@ -64,7 +59,6 @@ public class CourseUtils
         // Return as percent
         return percent;
     }
-
 
     public static Topic convertToTopic(@NonNull Course course)
     {

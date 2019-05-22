@@ -16,9 +16,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -179,10 +179,10 @@ public class TermDetailFragment extends Fragment
         if(term != null) {
             term.observe(this, termData -> {
                 // Format data
+                DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
                 String days = termData.getDaysLeft() + "";
-                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd", Locale.US);
-                String start = formatter.format(termData.getStartDate());
-                String end = formatter.format(termData.getEndDate());
+                String start = termData.getStartDate().format(formatter);
+                String end = termData.getEndDate().format(formatter);
 
                 // Attach data to GUI
                 termLabel.setText(termData.getTitle());
@@ -199,7 +199,6 @@ public class TermDetailFragment extends Fragment
         LiveData<List<Course>> courses = viewModel.getCourses();
         if(courses != null) {
             courses.observe(this, cl -> {
-                // TODO: More stuff
                 // Update courses list
                 courseList = cl;
                 // Convert to List of Topics

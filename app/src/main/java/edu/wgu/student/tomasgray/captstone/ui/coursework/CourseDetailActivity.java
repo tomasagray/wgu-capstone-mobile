@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -108,8 +109,9 @@ public class CourseDetailActivity extends AppCompatActivity
         // ------------------------------------------------------------------
         viewModel.getCourse().observe(this, course -> {
             // Format data
-            String start = CourseUtils.getShortDate(course.getStartDate());
-            String end = CourseUtils.getShortDate(course.getEndDate());
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd");
+            String start = course.getStartDate().format(dateTimeFormatter);
+            String end = course.getEndDate().format(dateTimeFormatter);
             String credits = CourseUtils.getCreditString(course);
             String days = CourseUtils.getDaysLeftString(course);
             int percent = CourseUtils.getPercentComplete(course);
@@ -246,6 +248,7 @@ public class CourseDetailActivity extends AppCompatActivity
                 if(resultCode == RESULT_OK) {
                     // Add new note
                     Log.i(LOG_TAG, "New note was saved successfully");
+                    noteSlidePagerAdapter.notifyDataSetChanged();
                 } else {
                     Log.i(LOG_TAG, "Result was: " + resultCode);
                 }
@@ -255,6 +258,7 @@ public class CourseDetailActivity extends AppCompatActivity
                 if(resultCode == RESULT_OK) {
                     // Update/overwrite note
                     Log.i(LOG_TAG, "Note successfully edited");
+                    noteSlidePagerAdapter.notifyDataSetChanged();
                 } else {
                     Log.i(LOG_TAG, "Result was: " + resultCode);
                 }

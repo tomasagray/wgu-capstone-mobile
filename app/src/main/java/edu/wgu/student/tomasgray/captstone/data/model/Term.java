@@ -5,9 +5,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 
 @Entity
@@ -17,14 +17,14 @@ public class Term
     @NonNull
     private final UUID termId;
     private String title;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
 
     // Constructors
     // -----------------------------------------------------------
     @Ignore
-    public Term(UUID termId) {
+    public Term(@NonNull UUID termId) {
         this.termId = termId;
     }
     @Ignore
@@ -33,12 +33,12 @@ public class Term
         this.title = title;
     }
     @Ignore
-    public Term(UUID termId, String title, Date start) {
+    public Term(UUID termId, String title, LocalDate start) {
         this(termId, title);
         this.startDate = start;
     }
     // Used by Room
-    public Term(UUID termId, String title, Date startDate, Date endDate) {
+    public Term(UUID termId, String title, LocalDate startDate, LocalDate endDate) {
         this(termId, title, startDate);
         this.endDate = endDate;
     }
@@ -55,23 +55,28 @@ public class Term
     public void setTitle(String title) {
         this.title = title;
     }
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
-    // Computer difference between now and the end of the term
+
+    /** Compute difference between now and the end of the term
+     *
+     * @return int Number of days remaining in term, based on current date
+     */
     public int getDaysLeft() {
-        long diff = Math.abs(this.endDate.getTime() - new Date().getTime());
         return
-                (int)TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            Period
+                .between( LocalDate.now(), getEndDate())
+                .getDays();
     }
 
     @Override

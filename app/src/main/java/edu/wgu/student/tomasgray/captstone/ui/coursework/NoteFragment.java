@@ -12,6 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.UUID;
 
 import edu.wgu.student.tomasgray.captstone.R;
@@ -86,7 +88,9 @@ public class NoteFragment extends Fragment
             viewModel.init(noteId);
             viewModel.getNote().observe(this, note -> {
                 // Format data
-                String date = note.getUpdateDate().toString();
+                String date = note
+                        .getUpdateDate()
+                        .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
                 // Update GUI
                 noteDate.setText(date);
                 noteText.setText(note.getNoteText());

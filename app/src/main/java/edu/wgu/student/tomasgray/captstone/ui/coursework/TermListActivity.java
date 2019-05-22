@@ -78,7 +78,7 @@ public class TermListActivity extends AppCompatActivity
         termViewPager.setAdapter(pagerAdapter);
         // Setup tabs
         this.pagerTabs = findViewById(R.id.pagerTabs);
-        pagerTabs.setupWithViewPager(termViewPager);
+        pagerTabs.setupWithViewPager(termViewPager, true);
     }
 
     @Override

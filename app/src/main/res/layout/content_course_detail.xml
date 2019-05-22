@@ -246,9 +246,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/noteViewPager"
 
-            app:tabIndicator="@drawable/tab_selector"
+            app:tabBackground="@drawable/tab_selector"
             app:tabIndicatorGravity="center"
-            app:tabIndicatorHeight="32dp"/>
+            app:tabIndicatorHeight="0dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -9,16 +9,12 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 public class Course
 {
-    // Field constants
-    public static final String COURSE_ID = "courseId";
-
-
     public enum Status {
         @SerializedName("in_progress")
         IN_PROGRESS,
@@ -37,15 +33,15 @@ public class Course
     private String title;
     private String courseNumber;
     private int credits;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Status status;
     private UUID termId;
 
     // Constructors
     // --------------------------------------------------------
     @Ignore
-    public Course(UUID id) {
+    public Course(@NonNull UUID id) {
         this.id = id;
     }
     @Ignore
@@ -58,8 +54,8 @@ public class Course
         this(id, title);
         this.courseNumber = courseNumber;
     }
-    public Course(UUID id, String title, String courseNumber, int credits, Date startDate,
-                  Date endDate, Status status)
+    public Course(UUID id, String title, String courseNumber, int credits, LocalDate startDate,
+                  LocalDate endDate, Status status)
     {
         this(id, title, courseNumber);
         this.credits = credits;
@@ -73,6 +69,7 @@ public class Course
 
     // Getters & Setters
     // --------------------------------------------------------
+    @NonNull
     public UUID getId() {
         return id;
     }
@@ -94,16 +91,16 @@ public class Course
     public void setCredits(int credits) {
         this.credits = credits;
     }
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
     public Status getStatus() {
