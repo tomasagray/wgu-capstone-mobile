@@ -42,7 +42,6 @@ public class TermDetailViewModel extends AndroidViewModel
             return;
         }
 
-
         this.term = termRepository.getTerm(termId);
         // TODO: FIX THIS!
 //        this.courses = courseRepository.getCoursesForTerm(termId);

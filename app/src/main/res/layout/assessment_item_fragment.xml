@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:background="@android:color/white"
+    android:elevation="4dp"
+    tools:context=".ui.coursework.AssessmentItemFragment">
+
+    <TextView
+        android:id="@+id/itemTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/placeholder_text"
+        android:textAppearance="@style/SubHeading"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/itemDescriptionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder_text"
+        app:layout_constraintStart_toStartOf="@+id/itemTitleText"
+        app:layout_constraintTop_toBottomOf="@+id/itemTitleText" />
+
+    <LinearLayout
+        android:id="@+id/competentItemContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/competent_item_border"
+        android:elevation="2dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/itemDescriptionText"
+        app:layout_constraintTop_toBottomOf="@+id/itemDescriptionText">
+
+        <TextView
+            android:id="@+id/competentLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/competent"
+            android:textAppearance="@style/AssessmentItemLabel" />
+
+        <TextView
+            android:id="@+id/competentItemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/placeholder_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/approachingContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/approaching_item_border"
+        android:elevation="2dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/competentItemContainer"
+        app:layout_constraintTop_toBottomOf="@+id/competentItemContainer">
+
+        <TextView
+            android:id="@+id/approachingLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/approaching_competence"
+            android:textAppearance="@style/AssessmentItemLabel" />
+
+        <TextView
+            android:id="@+id/approachingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notCompetentContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/fail_item_border"
+        android:elevation="2dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/approachingContainer"
+        app:layout_constraintTop_toBottomOf="@+id/approachingContainer">
+
+        <TextView
+            android:id="@+id/notCompetentLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/not_competent"
+            android:textAppearance="@style/AssessmentItemLabel" />
+
+        <TextView
+            android:id="@+id/notCompetentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_text" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

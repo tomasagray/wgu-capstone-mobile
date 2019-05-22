@@ -8,17 +8,57 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 public class Assessment
 {
-
     public enum AssessmentType {
         @SerializedName("objective")
         OBJECTIVE,
         @SerializedName("performance")
         PERFORMANCE
+    }
+
+    public static class AssessmentItem
+    {
+        private String title;
+        private String description;
+        private String competence;
+        private String approaching;
+        private String incompetence;
+
+        public String getTitle() {
+            return title;
+        }
+        public void setTitle(String title) {
+            this.title = title;
+        }
+        public String getDescription() {
+            return description;
+        }
+        public void setDescription(String description) {
+            this.description = description;
+        }
+        public String getCompetence() {
+            return competence;
+        }
+        public void setCompetence(String competence) {
+            this.competence = competence;
+        }
+        public String getApproaching() {
+            return approaching;
+        }
+        public void setApproaching(String approaching) {
+            this.approaching = approaching;
+        }
+        public String getIncompetence() {
+            return incompetence;
+        }
+        public void setIncompetence(String incompetence) {
+            this.incompetence = incompetence;
+        }
     }
 
     @PrimaryKey
@@ -29,6 +69,8 @@ public class Assessment
     private AssessmentType type;
     private Date startDate;
     private Date endDate;
+    @SerializedName("items")
+    private List<AssessmentItem> assessmentItems;
 
 
     // Constructors
@@ -80,6 +122,12 @@ public class Assessment
     }
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+    public List<AssessmentItem> getAssessmentItems() {
+        return this.assessmentItems;
+    }
+    public void setAssessmentItems(List<AssessmentItem> items) {
+        this.assessmentItems = items;
     }
 
     @Override

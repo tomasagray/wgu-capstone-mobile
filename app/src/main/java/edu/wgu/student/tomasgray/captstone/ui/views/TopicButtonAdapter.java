@@ -21,13 +21,6 @@ public class TopicButtonAdapter extends RecyclerView.Adapter<TopicButtonAdapter.
 
     private List<Topic> data;
     private RecyclerView recyclerView;
-    private View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int itemPosition = recyclerView.getChildAdapterPosition(v);
-            callback.onItemClick(itemPosition);
-        }
-    };
     private OnAdapterInteractionListener callback;
 
     public void setAdapterInteractionListener(OnAdapterInteractionListener callback) {
@@ -44,7 +37,8 @@ public class TopicButtonAdapter extends RecyclerView.Adapter<TopicButtonAdapter.
 
     @NonNull
     @Override
-    public TopicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TopicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         View view
                 = LayoutInflater
                     .from(parent.getContext())
@@ -54,7 +48,10 @@ public class TopicButtonAdapter extends RecyclerView.Adapter<TopicButtonAdapter.
                             false
                     );
         // Attach click handler
-        view.setOnClickListener(clickListener);
+        view.setOnClickListener(v -> {
+            int itemPosition = recyclerView.getChildAdapterPosition(v);
+            callback.onItemClick(itemPosition);
+        });
         return new TopicViewHolder(view);
     }
 

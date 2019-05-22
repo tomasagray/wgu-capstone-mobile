@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.coursework.AssessmentDetailActivity"
+    tools:showIn="@layout/activity_assessment_detail">
+
+    <TextView
+        android:id="@+id/assessmentTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/placeholder_text"
+        android:textAppearance="@style/ActivityHeading"
+        android:textSize="36sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/assessmentDateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/unscheduled"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/scheduledForLabel"
+        app:layout_constraintStart_toEndOf="@+id/scheduledForLabel"
+        app:layout_constraintTop_toTopOf="@+id/scheduledForLabel" />
+
+    <TextView
+        android:id="@+id/scheduledForLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/scheduled_for"
+        android:textAppearance="@style/AssessmentItemLabel"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/assessmentTitleText"
+        app:layout_constraintTop_toBottomOf="@+id/assessmentTitleText" />
+
+    <TextView
+        android:id="@+id/typeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/type"
+        android:textAppearance="@style/AssessmentItemLabel"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/scheduledForLabel"
+        app:layout_constraintTop_toBottomOf="@+id/scheduledForLabel" />
+
+    <TextView
+        android:id="@+id/typeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder_text"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/typeLabel"
+        app:layout_constraintStart_toStartOf="@+id/assessmentDateText"
+        app:layout_constraintTop_toTopOf="@+id/typeLabel" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/assessmentItemList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/typeLabel" />
+</androidx.constraintlayout.widget.ConstraintLayout>

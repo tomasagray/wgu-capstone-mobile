@@ -37,7 +37,6 @@ public class Course
     private String title;
     private String courseNumber;
     private int credits;
-//    @TypeConverters(Converters.class)
     private Date startDate;
     private Date endDate;
     private Status status;

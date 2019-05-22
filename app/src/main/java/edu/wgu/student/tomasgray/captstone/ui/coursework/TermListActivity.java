@@ -25,10 +25,12 @@ public class TermListActivity extends AppCompatActivity
 {
     private static final String LOG_TAG = "TermListActivity";
 
+    // GUI
     private TermListViewModel viewModel;
     private ViewPager termViewPager;
     private TabLayout pagerTabs;
     private TermSlidePagerAdapter pagerAdapter;
+    // Data
     private List<Term> termList;
 
     @Override
@@ -51,15 +53,12 @@ public class TermListActivity extends AppCompatActivity
         getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);
 
-        // Setup ViewPager
-        // -------------------------------------------------------------------
-        this.termViewPager = findViewById(R.id.termViewPager);
-        this.pagerAdapter = new TermSlidePagerAdapter(getSupportFragmentManager());
-        termViewPager.setAdapter(pagerAdapter);
-        // Setup tabs
-        this.pagerTabs = findViewById(R.id.pagerTabs);
-        pagerTabs.setupWithViewPager(termViewPager);
+        // Setup
+        initializeGui();
+        initializeViewModel();
+    }
 
+    private void initializeViewModel() {
         // Attach ViewModel
         // -------------------------------------------------------------------
         this.viewModel = ViewModelProviders.of(this).get(TermListViewModel.class);
@@ -69,6 +68,17 @@ public class TermListActivity extends AppCompatActivity
             termList = terms;
             pagerAdapter.notifyDataSetChanged();
         });
+    }
+
+    private void initializeGui() {
+        // Setup ViewPager
+        // -------------------------------------------------------------------
+        this.termViewPager = findViewById(R.id.termViewPager);
+        this.pagerAdapter = new TermSlidePagerAdapter(getSupportFragmentManager());
+        termViewPager.setAdapter(pagerAdapter);
+        // Setup tabs
+        this.pagerTabs = findViewById(R.id.pagerTabs);
+        pagerTabs.setupWithViewPager(termViewPager);
     }
 
     @Override

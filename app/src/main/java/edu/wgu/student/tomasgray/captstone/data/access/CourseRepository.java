@@ -26,7 +26,6 @@ public class CourseRepository
     // Singleton
     // --------------------------------------------------------------------------
     private static volatile CourseRepository instance;
-
     public static CourseRepository getInstance(Context context) {
         if (instance == null) {
             // Get a ref to DAO

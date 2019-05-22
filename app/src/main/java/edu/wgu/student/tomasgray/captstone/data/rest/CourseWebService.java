@@ -19,6 +19,7 @@ public interface CourseWebService
     @GET("courses")
     Call<List<Course>> getAllCourses();
 
+    // TODO: Make me receive a UUID
     // Fetch data for specific course
     @GET("courses/{course}")
     Call<Course> getCourse(@Path("course") String courseId);

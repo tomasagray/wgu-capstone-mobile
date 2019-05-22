@@ -8,17 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="UserName" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">@dimen/large_text</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
-    <style name="SubHeading" parent="TextAppearance.AppCompat.Large">
-        <item name="android:textSize">24dp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/design_default_color_primary_dark</item>
-    </style>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -28,7 +17,32 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <!-- Custom views -->
+    <!-- Custom styles -->
+    <style name="ActivityHeading" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">48dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="SubHeading" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textSize">24dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/design_default_color_primary_dark</item>
+    </style>
+
+    <style name="AssessmentItemLabel" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="UserName" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/large_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <!-- Custom view styles -->
     <style name="FacultyCard" parent="CardView">
         <item name="cardElevation">2dp</item>
     </style>

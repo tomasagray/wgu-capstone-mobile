@@ -25,7 +25,7 @@
     <string name="user_image">User image</string>
     <string name="days_left">days left</string>
     <string name="Courses">Courses</string>
-]
+
     <string name="coursework_overview">Coursework Overview</string>
     <string name="faculty_overview">Faculty</string>
     <string name="term_detail">Term Detail</string>
@@ -39,4 +39,17 @@
     <string name="add">+</string>
     <string name="progress">Progress</string>
     <string name="course_mentor">Course Mentor</string>
+    <string name="title_activity_note_editor">NoteEditorActivity</string>
+    <string name="save">SAVE</string>
+    <string name="enter_notes">Enter notes for this course...</string>
+    <string name="edit_note">Edit note</string>
+    <string name="new_note">New note</string>
+    <string name="title_activity_assessment_detail">AssessmentDetailActivity</string>
+    <string name="competent">COMPETENT</string>
+    <string name="approaching_competence">APPROACHING COMPETENCE</string>
+    <string name="not_competent">NOT COMPETENT</string>
+    <string name="scheduled_for">Scheduled for:</string>
+    <string name="type">Type:</string>
+    <string name="unscheduled">Unscheduled</string>
+    <string name="assessment_details">Assessment Details</string>
 </resources>

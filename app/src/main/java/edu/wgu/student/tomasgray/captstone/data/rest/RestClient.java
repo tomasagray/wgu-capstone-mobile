@@ -6,18 +6,17 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
+import com.google.gson.JsonObject;
 
-import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Locale;
 
+import edu.wgu.student.tomasgray.captstone.data.model.Assessment;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -28,6 +27,7 @@ public class RestClient
 
     // Retrofit2 instance
     private static Retrofit retrofit;
+    final static DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     // Remote server address
     private static final String BASE_URL
             // Local
@@ -39,25 +39,50 @@ public class RestClient
     private static Gson gsonDateFormatter()
     {
         final GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-            final DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-            @Override
-            public Date deserialize(JsonElement json, Type typeOfT,
-                                         JsonDeserializationContext context) throws JsonParseException
-            {
-                Log.i(LOG_TAG, "Deserializing JSON: " + json.getAsString());
+        builder.registerTypeAdapter(Date.class,
+                (JsonDeserializer<Date>) (json, typeOfT, context) -> {
+                    Log.i(LOG_TAG, "Deserializing Date JSON: " + json.getAsString());
 
-                try {
-                    return format.parse(json.getAsString());
+                    try {
+                        return format.parse(json.getAsString());
 
-                } catch (ParseException e) {
-                    Log.e(LOG_TAG, "Error parsing JSON: " + json.getAsString());
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        });
+                    } catch (ParseException e) {
+                        Log.e(LOG_TAG, "Error parsing JSON: " + json.getAsString());
+                        e.printStackTrace();
+                        return null;
+                    }
+                });
+        builder.registerTypeAdapter(LocalDate.class,
+                (JsonDeserializer<LocalDate>) (json, typeOfT, context) -> {
+                    Log.i(LOG_TAG, "Deserializing LocalDate JSON: " + json.getAsString());
+                    return LocalDate.parse(json.getAsString());
+                });
+        builder.registerTypeAdapter(Assessment.AssessmentItem.class,
+                (JsonDeserializer<Assessment.AssessmentItem>) (json, typeOfT, context) -> {
+                    try {
+                        Log.i(LOG_TAG, "Deserializing Json to AssessmentItem");
 
+                        // TODO: Implement this!
+                        // Get JSON object
+                        JsonObject obj = json.getAsJsonObject();
+                        // Parse JSON into AssessmentItem instance
+                        Assessment.AssessmentItem item = new Assessment.AssessmentItem();
+                        item.setTitle(obj.get("title").getAsString());
+                        item.setDescription(obj.get("description").getAsString());
+                        item.setCompetence(obj.get("competence").getAsString());
+                        item.setApproaching(obj.get("approaching").getAsString());
+                        item.setIncompetence(obj.get("incompetence").getAsString());
+                        // Return assembled Item
+                        return item;
+
+                    } catch (RuntimeException | Error e) {
+                        Log.e(LOG_TAG, "Error caught while deserializing AssessmentItem!");
+                        // Default
+                        return new Assessment.AssessmentItem();
+                    }
+                });
+
+        builder.setDateFormat("yyyy-MM-dd");
         return builder.create();
     }
 

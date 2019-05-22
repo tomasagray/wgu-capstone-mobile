@@ -13,6 +13,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.coursework.AssessmentDetailActivity"
+            android:label="@string/title_activity_assessment_detail"
+            android:parentActivityName=".ui.coursework.CourseDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.wgu.student.tomasgray.captstone.ui.coursework.CourseDetailActivity" />
+        </activity>
+        <activity
+            android:name=".ui.coursework.NoteEditorActivity"
+            android:label="@string/title_activity_note_editor"
+            android:parentActivityName=".ui.coursework.CourseDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.wgu.student.tomasgray.captstone.ui.coursework.CourseDetailActivity" />
+        </activity>
+        <activity
             android:name=".ui.coursework.CourseDetailActivity"
             android:label="@string/title_activity_course_detail"
             android:parentActivityName=".ui.coursework.TermListActivity"

@@ -103,6 +103,7 @@ public class AssessmentRepository
                 );
 
                 e.printStackTrace();
+                System.exit(1);
             }
         });
     }

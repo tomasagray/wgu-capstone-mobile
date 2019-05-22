@@ -223,5 +223,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/courseNumberText" />
 
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/noteViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="275dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="32dp"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addNoteButton" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/notePagerTabs"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noteViewPager"
+
+            app:tabIndicator="@drawable/tab_selector"
+            app:tabIndicatorGravity="center"
+            app:tabIndicatorHeight="32dp"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

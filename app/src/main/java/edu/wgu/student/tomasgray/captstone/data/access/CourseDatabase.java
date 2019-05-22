@@ -20,7 +20,6 @@ public abstract class CourseDatabase extends RoomDatabase
     // Singleton
     // -----------------------------------------------------------
     private static volatile CourseDatabase INSTANCE;
-
     static CourseDatabase getInstance(final Context context) {
         if(INSTANCE == null) {
             synchronized (CourseDatabase.class) {
