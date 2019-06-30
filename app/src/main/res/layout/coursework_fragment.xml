@@ -21,13 +21,24 @@
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/user_image"
                 android:src="@drawable/ic_user"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/welcomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/welcome"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/userAvatar"
+                app:layout_constraintStart_toStartOf="@+id/userAvatar"
+                app:layout_constraintTop_toBottomOf="@+id/userAvatar" />
 
             <TextView
                 android:id="@+id/userNameText"
@@ -37,11 +48,12 @@
                 android:text="@string/placeholder_text"
                 android:textAppearance="@style/UserName"
                 app:layout_constraintEnd_toEndOf="@+id/userAvatar"
+                app:layout_constraintStart_toStartOf="@+id/userAvatar"
                 app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
 
             <fragment
                 android:id="@+id/currentTermFragment"
-                android:name="edu.wgu.student.tomasgray.captstone.ui.coursework.TermDetailFragment"
+                android:name="edu.wgu.student.tomasgray.capstone.ui.coursework.TermDetailFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -51,18 +63,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userNameText" />
-
-            <TextView
-                android:id="@+id/welcomeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/welcome"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/userAvatar"
-                app:layout_constraintStart_toStartOf="@+id/userAvatar"
-                app:layout_constraintTop_toBottomOf="@+id/userAvatar" />
+                app:layout_constraintTop_toBottomOf="@+id/userNameText"
+                tools:layout="@layout/fragment_term_detail" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

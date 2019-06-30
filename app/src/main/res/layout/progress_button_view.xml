@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<edu.wgu.student.tomasgray.captstone.ui.views.ProgressButtonView
+<edu.wgu.student.tomasgray.capstone.ui.views.ProgressButtonView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,5 +15,5 @@
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"></LinearLayout>
-</edu.wgu.student.tomasgray.captstone.ui.views.ProgressButtonView>
+        android:orientation="horizontal"/>
+</edu.wgu.student.tomasgray.capstone.ui.views.ProgressButtonView>

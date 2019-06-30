@@ -11,99 +11,166 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/termLabel"
-                android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/termLabelCard"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="48dp"
-                android:text="@string/placeholder_text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <edu.wgu.student.tomasgray.captstone.ui.views.ProgressButtonView
-                android:id="@+id/termProgressButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                android:background="@drawable/button_border"
+                android:visibility="visible"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/termLabel">
+                app:layout_constraintTop_toTopOf="parent">
 
-            </edu.wgu.student.tomasgray.captstone.ui.views.ProgressButtonView>
+                <TextView
+                    android:id="@+id/termProgressCardLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/term_progress"
+                    android:textAppearance="@style/UserName"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/daysLeftText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/days_left"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/termProgressButton"
-                app:layout_constraintEnd_toEndOf="@+id/termProgressButton" />
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/daysLeftCounterText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="@string/placeholder_text"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/daysLeftText"
-                app:layout_constraintEnd_toStartOf="@+id/daysLeftText"
-                app:layout_constraintTop_toTopOf="@+id/daysLeftText" />
-
-            <TextView
-                android:id="@+id/termStartDateText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/placeholder_text"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/termProgressButton"
-                app:layout_constraintTop_toBottomOf="@+id/termProgressButton" />
-
-            <TextView
-                android:id="@+id/termEndDateText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/placeholder_text"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/termProgressButton"
-                app:layout_constraintTop_toBottomOf="@+id/termProgressButton" />
-
-            <TextView
-                android:id="@+id/coursesLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="64dp"
-                android:text="@string/Courses"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/termStartDateText" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/courseListRecycler"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/termContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
+                android:elevation="4dp"
+                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/coursesLabel" />
+                app:layout_constraintTop_toBottomOf="@+id/termLabelCard">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <edu.wgu.student.tomasgray.capstone.ui.views.ProgressButtonView
+                        android:id="@+id/termProgressButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="24dp"
+                        android:background="@drawable/button_border"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/daysLeftText">
+
+                    </edu.wgu.student.tomasgray.capstone.ui.views.ProgressButtonView>
+
+                    <TextView
+                        android:id="@+id/daysLeftText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/days_left"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/termProgressButton"
+                        app:layout_constraintEnd_toEndOf="@+id/termProgressButton" />
+
+                    <TextView
+                        android:id="@+id/daysLeftCounterText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/placeholder_text"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/daysLeftText"
+                        app:layout_constraintEnd_toStartOf="@+id/daysLeftText"
+                        app:layout_constraintTop_toTopOf="@+id/daysLeftText" />
+
+                    <TextView
+                        android:id="@+id/termStartDateText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/placeholder_text"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/termProgressButton"
+                        app:layout_constraintTop_toBottomOf="@+id/termProgressButton" />
+
+                    <TextView
+                        android:id="@+id/termEndDateText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/placeholder_text"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/termProgressButton"
+                        app:layout_constraintTop_toBottomOf="@+id/termProgressButton" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/coursesLabelCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:visibility="visible"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/termContainer">
+
+                <TextView
+                    android:id="@+id/coursesCardLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Courses"
+                    android:textAppearance="@style/UserName"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/courseContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:elevation="4dp"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/coursesLabelCard">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/courseListRecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

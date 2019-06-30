@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.user.EditUserActivity"
+    tools:showIn="@layout/activity_edit_user">
+
+    <LinearLayout
+        android:id="@+id/linearContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/avatarContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/userAvatar"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:src="@drawable/ic_user"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/userDataContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/firstNameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/first_name"
+                android:textAppearance="@style/UserName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/firstNameEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/name"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/firstNameLabel"
+                app:layout_constraintTop_toBottomOf="@+id/firstNameLabel" />
+
+            <TextView
+                android:id="@+id/lastNameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/last_name"
+                android:textAppearance="@style/UserName"
+                app:layout_constraintStart_toStartOf="@+id/firstNameEditText"
+                app:layout_constraintTop_toBottomOf="@+id/firstNameEditText" />
+
+            <EditText
+                android:id="@+id/lastNameEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/name"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/lastNameLabel"
+                app:layout_constraintTop_toBottomOf="@+id/lastNameLabel" />
+
+            <TextView
+                android:id="@+id/emailLAbel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/email"
+                android:textAppearance="@style/UserName"
+                app:layout_constraintStart_toStartOf="@+id/lastNameEditText"
+                app:layout_constraintTop_toBottomOf="@+id/lastNameEditText" />
+
+            <EditText
+                android:id="@+id/emailEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/example_email"
+                android:inputType="textWebEmailAddress|textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/emailLAbel"
+                app:layout_constraintTop_toBottomOf="@+id/emailLAbel" />
+
+            <TextView
+                android:id="@+id/phoneLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/phone"
+                android:textAppearance="@style/UserName"
+                app:layout_constraintStart_toStartOf="@+id/emailEditText"
+                app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+
+            <EditText
+                android:id="@+id/phoneEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/example_phone"
+                android:inputType="textPersonName|phone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/phoneLabel"
+                app:layout_constraintTop_toBottomOf="@+id/phoneLabel" />
+
+            <TextView
+                android:id="@+id/addressLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/address"
+                android:textAppearance="@style/UserName"
+                app:layout_constraintStart_toStartOf="@+id/phoneEditText"
+                app:layout_constraintTop_toBottomOf="@+id/phoneEditText" />
+
+            <EditText
+                android:id="@+id/address1EditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/enter_street_address"
+                android:inputType="textPersonName|textPostalAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/addressLabel"
+                app:layout_constraintTop_toBottomOf="@+id/addressLabel" />
+
+            <EditText
+                android:id="@+id/address2EditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/optional"
+                android:inputType="textPersonName|textPostalAddress|textEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/address1EditText"
+                app:layout_constraintTop_toBottomOf="@+id/address1EditText" />
+
+            <TextView
+                android:id="@+id/cityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/city"
+                android:textAppearance="@style/UserName"
+                app:layout_constraintStart_toStartOf="@+id/address2EditText"
+                app:layout_constraintTop_toBottomOf="@+id/address2EditText" />
+
+            <EditText
+                android:id="@+id/cityEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/city_name"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/cityLabel"
+                app:layout_constraintTop_toBottomOf="@+id/cityLabel" />
+
+            <TextView
+                android:id="@+id/stateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/state"
+                android:textAppearance="@style/UserName"
+                app:layout_constraintStart_toStartOf="@+id/cityEditText"
+                app:layout_constraintTop_toBottomOf="@+id/cityEditText" />
+
+            <EditText
+                android:id="@+id/stateEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/state_or_st"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/stateLabel"
+                app:layout_constraintTop_toBottomOf="@+id/stateLabel" />
+
+            <TextView
+                android:id="@+id/zipLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/zip"
+                android:textAppearance="@style/UserName"
+                app:layout_constraintStart_toStartOf="@+id/stateEditText"
+                app:layout_constraintTop_toBottomOf="@+id/stateEditText" />
+
+            <EditText
+                android:id="@+id/zipEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/postal_code"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/zipLabel"
+                app:layout_constraintTop_toBottomOf="@+id/zipLabel" />
+
+            <Button
+                android:id="@+id/saveButton"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:elevation="4dp"
+                android:paddingLeft="48dp"
+                android:paddingTop="8dp"
+                android:paddingRight="48dp"
+                android:paddingBottom="8dp"
+                android:text="@string/save"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/zipEditText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Capstone</string>
-
+    <!-- Development -->
+    <!--<string name="placeholder_text">Placeholder</string>-->
+    <!-- Production -->
+    <string name="placeholder_text"> </string>
     <!-- Activity titles -->
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_course_detail">CourseDetailActivity</string>
@@ -12,16 +15,15 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">Welcome</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_password">Password must be >= 4 characters</string>
     <string name="login_failed">"Login failed"</string>
 
     <!-- Bottom nav -->
     <string name="user_profile">User profile</string>
     <string name="faculty">Faculty</string>
     <string name="coursework">Coursework</string>
-    <string name="placeholder_text">Placeholder</string>
     <string name="user_image">User image</string>
     <string name="days_left">days left</string>
     <string name="Courses">Courses</string>
@@ -41,7 +43,7 @@
     <string name="course_mentor">Course Mentor</string>
     <string name="title_activity_note_editor">NoteEditorActivity</string>
     <string name="save">SAVE</string>
-    <string name="enter_notes">Enter notes for this course...</string>
+    <string name="enter_notes">Enter notes for this course…</string>
     <string name="edit_note">Edit note</string>
     <string name="new_note">New note</string>
     <string name="title_activity_assessment_detail">AssessmentDetailActivity</string>
@@ -52,4 +54,37 @@
     <string name="type">Type:</string>
     <string name="unscheduled">Unscheduled</string>
     <string name="assessment_details">Assessment Details</string>
+    <string name="id">ID:</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="user_profile_avatar">User profile avatar</string>
+    <string name="zip">Zip</string>
+    <string name="country">Country</string>
+    <string name="logout">Logout</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="edit">Edit</string>
+    <string name="title_activity_edit_user">EditUserActivity</string>
+    <string name="name">Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="example_email">name@example.com</string>
+    <string name="phone">Phone</string>
+    <string name="example_phone">(xxx) xxx-xxxx</string>
+    <string name="enter_street_address">Enter street address</string>
+    <string name="optional">(Optional)</string>
+    <string name="edit_personal">Edit personal information</string>
+    <string name="postal_code">Postal code</string>
+    <string name="city_name">City name</string>
+    <string name="state_or_st">State or ST</string>
+    <string name="office_hours">Office Hours</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="friday">Friday</string>
+    <string name="thursday">Thursday</string>
+    <string name="welcome_uhk">Welcome to the University of Hardt-Knox</string>
+    <string name="term_progress">Term Progress</string>
 </resources>

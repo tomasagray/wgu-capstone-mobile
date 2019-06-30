@@ -1,23 +1,257 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="FacultyDetailsActivity"
-    tools:showIn="@layout/activity_faculty_details">
+    >
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:text="Shithole TEXT!"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:padding="32dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".FacultyDetailsActivity"
+        tools:showIn="@layout/activity_faculty_details">
+
+        <ImageView
+            android:id="@+id/facultyAvatar"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_user"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/facultyNameText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/placeholder_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/UserName"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/facultyAvatar" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/facultyContactContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:elevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/facultyNameText">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="32dp">
+
+                <ImageView
+                    android:id="@+id/emailIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_email"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <Button
+                    android:id="@+id/callFacultyButton"
+                    style="@style/ContactButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/placeholder_text"
+                    app:layout_constraintBottom_toBottomOf="@+id/phoneIcon"
+                    app:layout_constraintStart_toEndOf="@+id/phoneIcon"
+                    app:layout_constraintTop_toTopOf="@+id/phoneIcon" />
+
+                <ImageView
+                    android:id="@+id/phoneIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="48dp"
+                    android:src="@drawable/ic_phone"
+                    app:layout_constraintStart_toStartOf="@+id/emailIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/emailIcon"
+                    tools:ignore="ContentDescription" />
+
+                <Button
+                    android:id="@+id/emailFacultyButton"
+                    style="@style/ContactButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/placeholder_text"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/emailIcon"
+                    app:layout_constraintStart_toEndOf="@+id/emailIcon"
+                    app:layout_constraintTop_toTopOf="@+id/emailIcon" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="64dp"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/facultyContactContainer"
+            tools:layout_editor_absoluteX="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="32dp">
+
+                <ImageView
+                    android:id="@+id/clockIcon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_clock"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/wednesdayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/wednesday"
+                    android:textAppearance="@style/AssessmentItemLabel"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="@+id/tuesdayLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/tuesdayLabel" />
+
+                <TextView
+                    android:id="@+id/thursdayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/thursday"
+                    android:textAppearance="@style/AssessmentItemLabel"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="@+id/wednesdayLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/wednesdayLabel" />
+
+                <TextView
+                    android:id="@+id/tuesdayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/tuesday"
+                    android:textAppearance="@style/AssessmentItemLabel"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="@+id/mondayLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/mondayLabel" />
+
+                <TextView
+                    android:id="@+id/friOfficeHoursText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder_text"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fridayLabel"
+                    app:layout_constraintStart_toStartOf="@+id/thursOfficeHoursText"
+                    app:layout_constraintTop_toTopOf="@+id/fridayLabel" />
+
+                <TextView
+                    android:id="@+id/mondayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/monday"
+                    android:textAppearance="@style/AssessmentItemLabel"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/officeHoursLabel" />
+
+                <TextView
+                    android:id="@+id/tuesOfficeHoursText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder_text"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tuesdayLabel"
+                    app:layout_constraintStart_toStartOf="@+id/wedsOfficeHoursText"
+                    app:layout_constraintTop_toTopOf="@+id/tuesdayLabel" />
+
+                <TextView
+                    android:id="@+id/thursOfficeHoursText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder_text"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/thursdayLabel"
+                    app:layout_constraintStart_toStartOf="@+id/wedsOfficeHoursText"
+                    app:layout_constraintTop_toTopOf="@+id/thursdayLabel" />
+
+                <TextView
+                    android:id="@+id/officeHoursLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:text="@string/office_hours"
+                    android:textAppearance="@style/SubHeading"
+                    app:layout_constraintBottom_toBottomOf="@+id/clockIcon"
+                    app:layout_constraintStart_toEndOf="@+id/clockIcon"
+                    app:layout_constraintTop_toTopOf="@+id/clockIcon" />
+
+                <TextView
+                    android:id="@+id/fridayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="32dp"
+                    android:text="@string/friday"
+                    android:textAppearance="@style/AssessmentItemLabel"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/thursdayLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/thursdayLabel" />
+
+                <TextView
+                    android:id="@+id/wedsOfficeHoursText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="32dp"
+                    android:text="@string/placeholder_text"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/wednesdayLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/wednesdayLabel"
+                    app:layout_constraintTop_toTopOf="@+id/wednesdayLabel" />
+
+                <TextView
+                    android:id="@+id/monOfficeHoursText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder_text"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/mondayLabel"
+                    app:layout_constraintStart_toStartOf="@+id/tuesOfficeHoursText"
+                    app:layout_constraintTop_toTopOf="@+id/mondayLabel" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

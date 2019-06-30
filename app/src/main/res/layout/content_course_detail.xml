@@ -15,14 +15,16 @@
 
         <TextView
             android:id="@+id/courseNameText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
             android:gravity="center_vertical"
             android:text="@string/placeholder_text"
             android:textAppearance="@style/UserName"
             android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +32,6 @@
             android:id="@+id/courseNumberText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/placeholder_text"
             android:textSize="24sp"
@@ -38,49 +39,113 @@
             app:layout_constraintStart_toStartOf="@+id/courseNameText"
             app:layout_constraintTop_toBottomOf="@+id/courseNameText" />
 
-        <TextView
-            android:id="@+id/creditsText"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/creditsContainer"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:text="@string/placeholder_text"
-            android:textSize="18sp"
-            android:textStyle="italic"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/courseNumberText"
             app:layout_constraintStart_toEndOf="@+id/courseNumberText"
-            app:layout_constraintTop_toTopOf="@+id/courseNumberText" />
+            app:layout_constraintTop_toTopOf="@+id/courseNumberText">
+
+            <ImageView
+                android:id="@+id/ribbonImage"
+                android:layout_width="32dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/creditsText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_ribbon"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/creditsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/placeholder_text"
+                android:textSize="18sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="@+id/ribbonImage"
+                app:layout_constraintStart_toEndOf="@+id/ribbonImage"
+                app:layout_constraintTop_toTopOf="@+id/ribbonImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/progressLabelCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="visible"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/creditsContainer">
+
+            <TextView
+                android:id="@+id/termProgressCardLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/course_mentor"
+                android:textAppearance="@style/UserName"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+        </androidx.cardview.widget.CardView>
 
         <include
             android:id="@+id/facultyCard"
             layout="@layout/faculty_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/mentorCardLabel"
+            app:layout_constraintTop_toBottomOf="@+id/progressLabelCard"
             tools:layout_editor_absoluteX="39dp" />
 
-        <TextView
-            android:id="@+id/progressLabel"
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/progressCard"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="48dp"
-            android:text="@string/progress"
-            android:textAppearance="@style/SubHeading"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardElevation="4dp"
+            app:contentPadding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/facultyCard" />
+            app:layout_constraintTop_toBottomOf="@+id/facultyCard">
+
+            <TextView
+                android:id="@+id/progressLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/progress"
+                android:textAppearance="@style/SubHeading"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+        </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
+            android:id="@+id/progressContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:background="@android:color/white"
             android:elevation="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressLabel">
+            app:layout_constraintTop_toBottomOf="@+id/progressCard">
 
             <TextView
                 android:id="@+id/daysLeftText"
@@ -92,7 +157,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/courseProgressBar"
                 app:layout_constraintEnd_toEndOf="@+id/courseProgressBar" />
 
-            <edu.wgu.student.tomasgray.captstone.ui.views.ProgressButtonView
+            <edu.wgu.student.tomasgray.capstone.ui.views.ProgressButtonView
                 android:id="@+id/courseProgressBar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -161,16 +226,29 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/assessmentsLabel"
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/assessmentsCard"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="48dp"
-            android:text="@string/assessments"
-            android:textAppearance="@style/UserName"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardElevation="4dp"
+            app:contentPadding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+            app:layout_constraintTop_toBottomOf="@+id/progressContainer">
+
+            <TextView
+                android:id="@+id/assessmentsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/assessments"
+                android:textAppearance="@style/UserName"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+        </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/assessmentList"
@@ -181,61 +259,20 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/assessmentsLabel" />
-
-        <TextView
-            android:id="@+id/notesLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/notes"
-            android:textAppearance="@style/UserName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/assessmentList" />
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/notesLabel"
-            app:layout_constraintEnd_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/addNoteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/add"
-            app:layout_constraintBottom_toBottomOf="@+id/notesLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/notesLabel"
-            style="@style/AddButton"/>
-
-        <TextView
-            android:id="@+id/mentorCardLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="48dp"
-            android:text="@string/course_mentor"
-            android:textAppearance="@style/SubHeading"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/courseNumberText" />
+            app:layout_constraintTop_toBottomOf="@+id/assessmentsCard" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/noteViewPager"
             android:layout_width="match_parent"
             android:layout_height="275dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
             android:elevation="4dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addNoteButton" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/notePagerTabs"
