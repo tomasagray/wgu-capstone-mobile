@@ -15,15 +15,12 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import edu.wgu.student.tomasgray.capstone.data.model.Course;
-import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class CourseWebServiceTest
 {
     private static final String LOG_TAG = "CourseWSTest";
 
-
-    private static final String UUIDpattern = "/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i";
     private final UUID testId = UUID.fromString("0d1905ca-62b4-4806-87cc-93a4cb450f26");
     private static final String userId = "39a8b804-3184-4f61-b976-f16e857fb10a";
     private static final String authKey = userId + ":W23LFtYwkj1dR1rl4bhPYxdNmsvJZkZSZ6PP8po/jC4=";
@@ -40,7 +37,7 @@ public class CourseWebServiceTest
 
     @DisplayName("Get a single course and make sure it's the one we wanted")
     @Test
-    public void testGetCourse()
+    void testGetCourse()
     {
         try {
             // Get a course
@@ -59,21 +56,6 @@ public class CourseWebServiceTest
         }
     }
 
-    @Test
-    public void testResponse()
-    {
-        try {
-            Response<ResponseBody> response = webService
-                    .getCourseResponse(testId.toString())
-                    .execute();
-
-            System.out.println(response.body());
-
-        } catch (IOException e) {
-            System.out.println("Error getting all courseResponse");
-            e.printStackTrace();
-        }
-    }
 
     @DisplayName("Retrieve all courses at once")
     @ParameterizedTest(name="Testing: {index} | {0}")
@@ -84,10 +66,9 @@ public class CourseWebServiceTest
         System.out.println(course);
 
         // Test each field is present
-//        assert course.getId().toString().matches(UUIDpattern);
         assert course.getTitle() != null && !(course.getTitle().equals(""));
         assert course.getCourseNumber() != null && !(course.getCourseNumber().equals(""));
-        assert course.getCredits() != 0;
+        assert course.getCredits() >= 3 && course.getCredits() <= 6;
     }
 
 
