@@ -1,3 +1,20 @@
+<!--
+  ~ Copyright (c) 2020 Tomás Gray
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector android:height="220dp" android:viewportHeight="219.6"
     android:viewportWidth="248.7" android:width="249dp" xmlns:android="http://schemas.android.com/apk/res/android">
     <path android:fillColor="#29ABE2" android:pathData="M124.4,3.2C57.6,3.2 3.5,57.3 3.5,124.1c0,34.1 14.2,65 36.9,87c22.2,-20.1 51.6,-32.4 84,-32.4s61.8,12.3 84,32.4c22.8,-22 36.9,-52.8 36.9,-87C245.3,57.3 191.1,3.2 124.4,3.2zM124.4,178.3c-39.8,0 -72.2,-32.3 -72.2,-72.2S84.5,34 124.4,34s72.2,32.3 72.2,72.2S164.2,178.3 124.4,178.3z"/>
