@@ -41,12 +41,12 @@ public class LoginRepository
 
 
     private static volatile LoginRepository instance;
-    private LoginWebService webService;
-    private Executor executor;
+    private final LoginWebService webService;
+    private final Executor executor;
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
-    private MutableLiveData<Result<Authorization>> loginResult = new MutableLiveData<>();
+    private final MutableLiveData<Result<Authorization>> loginResult = new MutableLiveData<>();
 
     // private constructor : singleton access
     // TODO: Rewrite so more like other Repos
@@ -90,6 +90,7 @@ public class LoginRepository
 
                 if (response.isSuccessful()) {
                     Authorization authorization = response.body();
+                    assert authorization != null;
                     Log.i(
                             LOG_TAG,
                             "Login was successful: (u): "
@@ -101,9 +102,6 @@ public class LoginRepository
                     this.loginResult.postValue(
                             new Result.Success<Authorization>(authorization)
                     );
-                    // TODO: Redundant; eliminate?
-//                    App.setAuthorization(authorization);
-
                 } else {
                     Log.i(LOG_TAG, "Login failed: " + response);
                     // TODO: Handle login failure

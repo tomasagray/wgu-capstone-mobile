@@ -29,8 +29,8 @@ import edu.wgu.student.tomasgray.capstone.data.model.Student;
 public class UserInfoViewModel extends AndroidViewModel
 {
     // Repos
-    private StudentRepository studentRepository;
-    private LiveData<Student> studentLiveData;
+    private final StudentRepository studentRepository;
+    private final LiveData<Student> studentLiveData;
 
     public UserInfoViewModel(@NonNull Application application) {
         super(application);

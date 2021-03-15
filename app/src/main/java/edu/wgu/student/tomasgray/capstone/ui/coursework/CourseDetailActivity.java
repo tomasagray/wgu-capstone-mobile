@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -81,7 +82,6 @@ public class CourseDetailActivity extends AppCompatActivity
 
     // Mentor
     private LinearLayout mentorCard;
-    private ImageView mentorImage;
     private TextView mentorName;
     private TextView mentorPhone;
     private TextView mentorEmail;
@@ -91,7 +91,6 @@ public class CourseDetailActivity extends AppCompatActivity
     // Notes
     private ViewPager noteViewPager;
     private NoteSlidePagerAdapter noteSlidePagerAdapter;
-    private TabLayout notePagerTabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +98,10 @@ public class CourseDetailActivity extends AppCompatActivity
         setContentView(R.layout.activity_course_detail);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
         // Title
         setTitle(
                 getResources().getString(R.string.course_details)
@@ -173,8 +175,10 @@ public class CourseDetailActivity extends AppCompatActivity
                         .map(AssessmentUtils::convertToTopic)
                         .collect(Collectors.toList());
             // Attach data to RecyclerView
-            ((TopicButtonAdapter)(assessmentList.getAdapter()))
-                    .setData(topics);
+            TopicButtonAdapter adapter = (TopicButtonAdapter) (assessmentList.getAdapter());
+            if (adapter != null) {
+                adapter.setData(topics);
+            }
         });
 
         // Notes
@@ -195,7 +199,7 @@ public class CourseDetailActivity extends AppCompatActivity
 
         // Mentor
         mentorCard = findViewById(R.id.facultyCard);
-        mentorImage = findViewById(R.id.facultyImage);
+        ImageView mentorImage = findViewById(R.id.facultyImage);
         mentorName = findViewById(R.id.facultyName);
         mentorPhone = findViewById(R.id.facultyPhone);
         mentorEmail = findViewById(R.id.facultyEmail);
@@ -222,7 +226,7 @@ public class CourseDetailActivity extends AppCompatActivity
         noteSlidePagerAdapter.setOnSliderClickListener(this);
         noteViewPager.setAdapter(noteSlidePagerAdapter);
         // Pager tabs
-        notePagerTabs = findViewById(R.id.notePagerTabs);
+        TabLayout notePagerTabs = findViewById(R.id.notePagerTabs);
         notePagerTabs.setupWithViewPager(noteViewPager);
     }
 
@@ -249,13 +253,15 @@ public class CourseDetailActivity extends AppCompatActivity
             // Determine which note was clicked
             int position = noteViewPager.getCurrentItem();
             // Get a note from the list
-            Note note = viewModel
-                            .getNotes()
-                            .getValue()
-                            .get(position);
-            Intent intent = new Intent(this, NoteEditorActivity.class);
-            intent.putExtra(ARG_NOTE_ID, note.getNoteId());
-            startActivityForResult(intent, EDIT_NOTE);
+            List<Note> notes = viewModel
+                    .getNotes()
+                    .getValue();
+            if (notes != null) {
+                Note note = notes.get(position);
+                Intent intent = new Intent(this, NoteEditorActivity.class);
+                intent.putExtra(ARG_NOTE_ID, note.getNoteId());
+                startActivityForResult(intent, EDIT_NOTE);
+            }
 
         } catch (NullPointerException e) {
             Log.e(
@@ -269,6 +275,7 @@ public class CourseDetailActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        super.onActivityResult(requestCode, resultCode, data);
         // Determine request
         switch (requestCode) {
             case NEW_NOTE:

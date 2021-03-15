@@ -43,14 +43,8 @@ public class NoteFragment extends Fragment
     public static final String ARG_NOTE_ID = "note_id";
 
 
-    // Data
-    // --------------------------------------------------------
-    private NoteViewModel viewModel;
     private UUID noteId;
 
-    // GUI
-    // --------------------------------------------------------
-    private ConstraintLayout noteBody;
     private TextView noteDate;
     private TextView noteText;
     private OnNoteInteractionListener callback;
@@ -98,12 +92,14 @@ public class NoteFragment extends Fragment
         // Initialize GUI
         initializeGui();
         // Initialize ViewModel
-        viewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
+        // Data
+        // --------------------------------------------------------
+        NoteViewModel viewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
         // TODO: Use the ViewModel
 
         if(noteId != null) {
             viewModel.init(noteId);
-            viewModel.getNote().observe(this, note -> {
+            viewModel.getNote().observe(getViewLifecycleOwner(), note -> {
                 if(note != null) {
                     // Format data
                     String date = note
@@ -120,10 +116,15 @@ public class NoteFragment extends Fragment
     private void initializeGui()
     {
         // Get GUI references
-        noteBody = getView().findViewById(R.id.noteBody);
-        noteBody.setOnClickListener(v -> callback.onNoteClick());
-        noteDate = getView().findViewById(R.id.noteDateText);
-        noteText = getView().findViewById(R.id.noteText);
+        // GUI
+        // --------------------------------------------------------
+        View view = getView();
+        if (view != null) {
+            ConstraintLayout noteBody = view.findViewById(R.id.noteBody);
+            noteBody.setOnClickListener(v -> callback.onNoteClick());
+            noteDate = view.findViewById(R.id.noteDateText);
+            noteText = view.findViewById(R.id.noteText);
+        }
     }
 
 

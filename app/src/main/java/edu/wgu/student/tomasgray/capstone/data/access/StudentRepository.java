@@ -60,9 +60,9 @@ public class StudentRepository
         return INSTANCE;
     }
 
-    private StudentDao studentDao;
-    private StudentWebService webService;
-    private Executor executor;
+    private final StudentDao studentDao;
+    private final StudentWebService webService;
+    private final Executor executor;
 
     private StudentRepository(StudentDao studentDao, StudentWebService webService, Executor executor) {
         this.studentDao = studentDao;

@@ -75,17 +75,14 @@ public class Faculty
         if(phone == null)
             return "";
 
-        StringBuilder sb = new StringBuilder();
         // Format phone number String
-        sb
-            .append("(")
-            .append(phone.substring(0,3))
-            .append(") ")
-            .append(phone.substring(3,6))
-            .append("-")
-            .append(phone.substring(6,10));
 
-        return sb.toString();
+        return "(" +
+                phone.substring(0, 3) +
+                ") " +
+                phone.substring(3, 6) +
+                "-" +
+                phone.substring(6, 10);
     }
     public void setPhone(String phone) {
         this.phone = phone;

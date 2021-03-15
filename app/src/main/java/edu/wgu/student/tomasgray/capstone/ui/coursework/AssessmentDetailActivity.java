@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -38,8 +39,7 @@ import java.util.UUID;
 import edu.wgu.student.tomasgray.capstone.R;
 import edu.wgu.student.tomasgray.capstone.data.model.Assessment;
 
-public class AssessmentDetailActivity extends AppCompatActivity
-{
+public class AssessmentDetailActivity extends AppCompatActivity {
     private static final String LOG_TAG = "AssessDetailActivity";
 
     // Argument flag for Intents
@@ -49,13 +49,10 @@ public class AssessmentDetailActivity extends AppCompatActivity
     private TextView assessmentTitle;
     private TextView assessmentType;
     private RecyclerView itemsList;
-    // ViewModel
-    private AssessmentDetailViewModel viewModel;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_detail);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -68,15 +65,18 @@ public class AssessmentDetailActivity extends AppCompatActivity
 
         // Extract Assessment ID from Intent
         Bundle extras = getIntent().getExtras();
-        if(extras != null) {
-            UUID assessmentId = (UUID)extras.get(ARG_ASSESSMENT_ID);
+        if (extras != null) {
+            UUID assessmentId = (UUID) extras.get(ARG_ASSESSMENT_ID);
             Log.i(LOG_TAG, "Initializing Activity with data for assessment: " + assessmentId);
             initializeViewModel(assessmentId);
         } else {
             Log.e(LOG_TAG, "Activity opened with no extras!");
         }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -88,8 +88,7 @@ public class AssessmentDetailActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void initializeGui()
-    {
+    private void initializeGui() {
         // Attach GUI references
         assessmentTitle = findViewById(R.id.assessmentTitleText);
         assessmentType = findViewById(R.id.typeText);
@@ -100,23 +99,24 @@ public class AssessmentDetailActivity extends AppCompatActivity
         itemsList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
-    private void initializeViewModel(UUID assessmentId)
-    {
+    private void initializeViewModel(UUID assessmentId) {
         // Initialize ViewModel
-        viewModel = ViewModelProviders.of(this).get(AssessmentDetailViewModel.class);
+        // ViewModel
+        AssessmentDetailViewModel viewModel = ViewModelProviders.of(this).get(AssessmentDetailViewModel.class);
         viewModel.init(assessmentId);
         viewModel.getAssessment().observe(this, assessment -> {
             // Update top-level GUI
             assessmentTitle.setText(assessment.getTitle());
             assessmentType.setText(assessment.getType().name().toUpperCase());
             // Update RecyclerView adapter data
-            ((AssessmentItemAdapter)itemsList.getAdapter())
-                    .setData(assessment.getAssessmentItems());
+            AssessmentItemAdapter adapter = (AssessmentItemAdapter) itemsList.getAdapter();
+            if (adapter != null) {
+                adapter.setData(assessment.getAssessmentItems());
+            }
         });
     }
 
-    private class AssessmentItemAdapter extends RecyclerView.Adapter<AssessmentItemAdapter.ItemViewHolder>
-    {
+    private static class AssessmentItemAdapter extends RecyclerView.Adapter<AssessmentItemAdapter.ItemViewHolder> {
         private List<Assessment.AssessmentItem> items;
 
         void setData(List<Assessment.AssessmentItem> items) {
@@ -126,23 +126,21 @@ public class AssessmentDetailActivity extends AppCompatActivity
 
         @NonNull
         @Override
-        public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-        {
+        public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view
                     = LayoutInflater
-                        .from(parent.getContext())
-                        .inflate(
-                                R.layout.assessment_item_fragment,
-                                parent,
-                                false
-                        );
+                    .from(parent.getContext())
+                    .inflate(
+                            R.layout.assessment_item_fragment,
+                            parent,
+                            false
+                    );
 
             return new ItemViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ItemViewHolder holder, int position)
-        {
+        public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
             Assessment.AssessmentItem item = items.get(position);
             // Attach data to GUI components
             holder.itemTitle.setText(item.getTitle());
@@ -159,17 +157,15 @@ public class AssessmentDetailActivity extends AppCompatActivity
             return (items == null) ? 0 : items.size();
         }
 
-        private class ItemViewHolder extends RecyclerView.ViewHolder
-        {
+        private static class ItemViewHolder extends RecyclerView.ViewHolder {
             // Item GUI components
-            TextView itemTitle;
-            TextView itemDescription;
-            TextView competentText;
-            TextView approachingText;
-            TextView failText;
+            final TextView itemTitle;
+            final TextView itemDescription;
+            final TextView competentText;
+            final TextView approachingText;
+            final TextView failText;
 
-            public ItemViewHolder(@NonNull View itemView)
-            {
+            public ItemViewHolder(@NonNull View itemView) {
                 super(itemView);
                 // Attach GUI
                 itemTitle = itemView.findViewById(R.id.itemTitleText);

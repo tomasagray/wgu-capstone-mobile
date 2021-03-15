@@ -22,7 +22,6 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 
 import java.io.IOException;
@@ -34,13 +33,13 @@ import java.util.concurrent.Executors;
 
 import edu.wgu.student.tomasgray.capstone.data.model.Course;
 import edu.wgu.student.tomasgray.capstone.data.model.Term;
+import edu.wgu.student.tomasgray.capstone.data.rest.Authorization;
 import edu.wgu.student.tomasgray.capstone.data.rest.RestClient;
 import edu.wgu.student.tomasgray.capstone.data.rest.TermWebService;
 import edu.wgu.student.tomasgray.capstone.ui.App;
 import retrofit2.Response;
 
-public class TermRepository
-{
+public class TermRepository {
     private static final String LOG_TAG = "TermRepository";
 
 
@@ -52,7 +51,7 @@ public class TermRepository
         if (instance == null) {
             // Get a ref to DAO
             TermDao termDao =
-                        Database
+                    Database
                             .getInstance(context)
                             .termDao();
             // For course data access
@@ -76,7 +75,6 @@ public class TermRepository
     private final CourseRepository courseRepository;
     private final TermWebService webservice;
     private final Executor executor;
-    private final LoginRepository loginRepository;
 
     // Constructors
     // --------------------------------------------------------------------------
@@ -85,21 +83,20 @@ public class TermRepository
         this.courseRepository = courseRepository;
         this.webservice = webservice;
         this.executor = executor;
-        this.loginRepository = LoginRepository.getInstance();
+        LoginRepository loginRepository = LoginRepository.getInstance();
     }
 
 
     // Data access
     // -------------------------------------------------------------------------
-    public LiveData<Term> getTerm(UUID termId)
-    {
+    public LiveData<Term> getTerm(UUID termId) {
         Log.i(LOG_TAG, "Fetching data for term: " + termId.toString());
         // Get fresh data
         refreshTermData();
         // Load term data
         LiveData<Term> termLiveData = termDao.load(termId);
         termLiveData = Transformations.switchMap(termLiveData, inputTerm -> {
-            if(inputTerm == null)
+            if (inputTerm == null)
                 return null;
             LiveData<List<Course>> coursesLiveData =
                     courseRepository.getCoursesForTerm(inputTerm.getTermId());
@@ -112,8 +109,7 @@ public class TermRepository
         return termLiveData;
     }
 
-    public LiveData<List<Term>> getTerms()
-    {
+    public LiveData<List<Term>> getTerms() {
         // Ensure local data is up-to-date
         refreshTermData();
         // Fetch data from local DB
@@ -121,17 +117,14 @@ public class TermRepository
 
         listLiveData = Transformations.switchMap(listLiveData, inputTerms -> {
             MediatorLiveData<List<Term>> listMediatorLiveData = new MediatorLiveData<>();
-            for(final Term term : inputTerms) {
+            for (final Term term : inputTerms) {
                 listMediatorLiveData.addSource(
                         courseRepository.getCoursesForTerm(term.getTermId()),
-                        new Observer<List<Course>>() {
-                            @Override
-                            public void onChanged(List<Course> courses) {
-                                Log.i(LOG_TAG, "Adding courselist for term: " + term.getTermId() + ", course #: " + courses.size());
-                                term.setCourseList(courses);
-                                Log.i(LOG_TAG, "Term " + term.getTermId() + " courselist sise is: " + term.getCourseList().size());
-                                listMediatorLiveData.setValue(inputTerms);
-                            }
+                        courses -> {
+                            Log.i(LOG_TAG, "Adding CourseList for term: " + term.getTermId() + ", course #: " + courses.size());
+                            term.setCourseList(courses);
+                            Log.i(LOG_TAG, "Term " + term.getTermId() + " CourseList size is: " + term.getCourseList().size());
+                            listMediatorLiveData.setValue(inputTerms);
                         }
                 );
             }
@@ -141,8 +134,7 @@ public class TermRepository
         return listLiveData;
     }
 
-    public LiveData<Term> getCurrentTerm()
-    {
+    public LiveData<Term> getCurrentTerm() {
         // Refresh local DB
         refreshTermData();
         // Get currently enrolled term
@@ -150,7 +142,7 @@ public class TermRepository
 
         // Fetch courses for this term when observers attach
         termLiveData = Transformations.switchMap(termLiveData, inputTerm -> {
-            if(inputTerm == null)
+            if (inputTerm == null)
                 return null;
             LiveData<List<Course>> coursesLiveData =
                     courseRepository.getCoursesForTerm(inputTerm.getTermId());
@@ -165,27 +157,25 @@ public class TermRepository
 
     // Server side
     // ------------------------------------------------------------------------
-    private void refreshTermData()
-    {
+    private void refreshTermData() {
         Log.i(LOG_TAG, "Refreshing Term data");
-        App.getAuthorization();
+        Authorization authorization = App.getAuthorization();
         executor.execute(() -> {
             // Skip if we have recently updated
-            if(termDao.isDataFresh())
+            if (termDao.isDataFresh())
                 return;
 
             try {
                 Response<List<Term>> response
                         = webservice
-                            .getAllTerms(
-                                    App.getAuthorization().getAuthHeader(),
-                                    App.getAuthorization().getUserId()
-                            )
-                            .execute();
+                        .getAllTerms(
+                                authorization.getAuthHeader(),
+                                authorization.getUserId()
+                        )
+                        .execute();
                 // Extract response data
                 List<Term> terms = response.body();
-
-                if(response.isSuccessful()) {
+                if (response.isSuccessful() && terms != null && terms.size() > 0) {
                     // TODO: Check for errors
                     // Clear old data
                     termDao.deleteAll();

@@ -32,7 +32,7 @@ public class CourseUtils
 
     // TODO: Rethink this class
 
-    private static SimpleDateFormat shortFormatter
+    private static final SimpleDateFormat shortFormatter
             = new SimpleDateFormat("MM/dd", Locale.US);
 
     public static String getShortDate(@NonNull LocalDate date) {
@@ -48,7 +48,7 @@ public class CourseUtils
         int days = ((int)ChronoUnit
                         .DAYS
                         .between( LocalDate.now(), course.getEndDate() ));
-        return (days < 0) ? 0 : days;
+        return Math.max(days, 0);
     }
 
     public static String getDaysLeftString(@NonNull Course course) {

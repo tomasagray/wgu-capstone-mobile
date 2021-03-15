@@ -28,6 +28,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -41,23 +43,15 @@ import edu.wgu.student.tomasgray.capstone.data.model.Faculty;
 
 public class FacultyDetailsActivity extends AppCompatActivity
 {
-    private static final String LOG_TAG = "FacultyDeetsActv";
+    private static final String LOG_TAG = "FacultyDetailsActivity";
     // For intent bundles
     public static final String ARG_FACULTY_ID = "faculty_id";
     // For for calls
     public static final int CALL_PERMISSIONS_REQUEST = 5432;
 
-    // GUI
-    private ImageView avatar;
     private TextView facultyNameText;
     private Button emailButton;
     private Button phoneButton;
-    // Office hours
-    private TextView monOfficeHours;
-    private TextView tuesOfficeHours;
-    private TextView wedsOfficeHours;
-    private TextView thursOfficeHours;
-    private TextView friOfficeHours;
 
     // VM
     private FacultyDetailsViewModel viewModel;
@@ -71,7 +65,10 @@ public class FacultyDetailsActivity extends AppCompatActivity
         setTitle(getResources().getString(R.string.faculty_details));
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         // Attach GUI
         initializeGui();
@@ -85,11 +82,10 @@ public class FacultyDetailsActivity extends AppCompatActivity
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -99,7 +95,8 @@ public class FacultyDetailsActivity extends AppCompatActivity
     {
         final String officeHours = "8 am — 5 pm";
 
-        avatar = findViewById(R.id.facultyAvatar);
+        // GUI
+        ImageView avatar = findViewById(R.id.facultyAvatar);
         facultyNameText = findViewById(R.id.facultyNameText);
         emailButton = findViewById(R.id.emailFacultyButton);
         phoneButton = findViewById(R.id.callFacultyButton);
@@ -141,11 +138,12 @@ public class FacultyDetailsActivity extends AppCompatActivity
 
 
         // Office hours
-        monOfficeHours = findViewById(R.id.monOfficeHoursText);
-        tuesOfficeHours = findViewById(R.id.tuesOfficeHoursText);
-        wedsOfficeHours = findViewById(R.id.wedsOfficeHoursText);
-        thursOfficeHours = findViewById(R.id.thursOfficeHoursText);
-        friOfficeHours = findViewById(R.id.friOfficeHoursText);
+        // Office hours
+        TextView monOfficeHours = findViewById(R.id.monOfficeHoursText);
+        TextView tuesOfficeHours = findViewById(R.id.tuesOfficeHoursText);
+        TextView wedsOfficeHours = findViewById(R.id.wedsOfficeHoursText);
+        TextView thursOfficeHours = findViewById(R.id.thursOfficeHoursText);
+        TextView friOfficeHours = findViewById(R.id.friOfficeHoursText);
         // Set office hours
         monOfficeHours.setText(officeHours);
         tuesOfficeHours.setText(officeHours);

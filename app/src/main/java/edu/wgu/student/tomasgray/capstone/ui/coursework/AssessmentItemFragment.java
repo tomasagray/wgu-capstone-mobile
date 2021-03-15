@@ -31,8 +31,6 @@ import edu.wgu.student.tomasgray.capstone.R;
 
 public class AssessmentItemFragment extends Fragment {
 
-    private AssessmentDetailViewModel mViewModel;
-
     public static AssessmentItemFragment newInstance() {
         return new AssessmentItemFragment();
     }
@@ -46,7 +44,7 @@ public class AssessmentItemFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(AssessmentDetailViewModel.class);
+        AssessmentDetailViewModel mViewModel = ViewModelProviders.of(this).get(AssessmentDetailViewModel.class);
         // TODO: Use the ViewModel
     }
 

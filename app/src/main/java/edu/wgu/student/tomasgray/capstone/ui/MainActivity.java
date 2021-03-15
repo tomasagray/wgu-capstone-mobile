@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
     private static final String LOG_TAG = "MainActivity";
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item ->
             {
                 switch (item.getItemId()) {

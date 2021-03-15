@@ -28,16 +28,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import edu.wgu.student.tomasgray.capstone.R;
 import edu.wgu.student.tomasgray.capstone.ui.App;
 
 public class OverviewFragment extends Fragment
-    implements TermDetailFragment.OnFragmentInteractionListener
-{
+        implements TermDetailFragment.OnFragmentInteractionListener {
     private static final String LOG_TAG = "OverviewFrag";
 
-    private TextView userNameText;
     private TermDetailViewModel detailViewModel;
 
 
@@ -51,8 +50,7 @@ public class OverviewFragment extends Fragment
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState)
-    {
+                             @Nullable Bundle savedInstanceState) {
         return
                 inflater.inflate(
                         R.layout.coursework_fragment,
@@ -72,18 +70,19 @@ public class OverviewFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
 
         // Initialize GUI
-        userNameText = getActivity().findViewById(R.id.userNameText);
-
-        userNameText.setText(
-                App.getAuthorization().getStudent().getFirstName()
-        );
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            TextView userNameText = activity.findViewById(R.id.userNameText);
+            userNameText.setText(
+                    App.getAuthorization().getStudent().getFirstName()
+            );
+        }
     }
 
     @Override
-    public void onAttachFragment(Fragment fragment)
-    {
-        if(fragment instanceof TermDetailFragment) {
-            TermDetailFragment detailFragment = (TermDetailFragment)fragment;
+    public void onAttachFragment(@NonNull Fragment fragment) {
+        if (fragment instanceof TermDetailFragment) {
+            TermDetailFragment detailFragment = (TermDetailFragment) fragment;
             detailFragment.setFragmentInteractionListener(this);
         }
     }

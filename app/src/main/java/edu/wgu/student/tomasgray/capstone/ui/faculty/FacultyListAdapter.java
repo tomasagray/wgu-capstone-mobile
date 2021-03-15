@@ -41,7 +41,7 @@ public class FacultyListAdapter extends RecyclerView.Adapter<FacultyListAdapter.
 
 
     private List<Faculty> faculty;
-    private Context context;
+    private final Context context;
 
     FacultyListAdapter(Context context) {
         this.context = context;
@@ -55,8 +55,7 @@ public class FacultyListAdapter extends RecyclerView.Adapter<FacultyListAdapter.
                 = LayoutInflater
                     .from(parent.getContext())
                     .inflate(R.layout.faculty_card, parent, false);
-        FacultyViewHolder holder = new FacultyViewHolder(view);
-        return holder;
+        return new FacultyViewHolder(view);
     }
 
     @Override
@@ -106,10 +105,10 @@ public class FacultyListAdapter extends RecyclerView.Adapter<FacultyListAdapter.
      */
     public static class FacultyViewHolder extends RecyclerView.ViewHolder
     {
-        View facultyCard;
-        TextView facultyName;
-        TextView facultyPhone;
-        TextView facultyEmail;
+        final View facultyCard;
+        final TextView facultyName;
+        final TextView facultyPhone;
+        final TextView facultyEmail;
 
         public FacultyViewHolder(@NonNull View itemView) {
             super(itemView);

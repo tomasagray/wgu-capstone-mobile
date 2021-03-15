@@ -32,6 +32,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import edu.wgu.student.tomasgray.capstone.R;
@@ -78,41 +79,47 @@ public class UserInfoFragment extends Fragment
 
     private void initializeGui()
     {
-        this.studentNameText = getActivity().findViewById(R.id.studentNameText);
-        this.studentIdText = getActivity().findViewById(R.id.studentIdText);
-        this.studentEmailText = getActivity().findViewById(R.id.studentEmailText);
-        this.studentPhoneText = getActivity().findViewById(R.id.studentPhoneText);
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            this.studentNameText = activity.findViewById(R.id.studentNameText);
+            this.studentIdText = activity.findViewById(R.id.studentIdText);
+            this.studentEmailText = activity.findViewById(R.id.studentEmailText);
+            this.studentPhoneText = activity.findViewById(R.id.studentPhoneText);
 
-        // Address
-        this.addressText = getActivity().findViewById(R.id.addressText);
-        this.cityText = getActivity().findViewById(R.id.cityText);
-        this.stateText = getActivity().findViewById(R.id.stateText);
-        this.zipText = getActivity().findViewById(R.id.zipText);
+            // Address
+            this.addressText = activity.findViewById(R.id.addressText);
+            this.cityText = activity.findViewById(R.id.cityText);
+            this.stateText = activity.findViewById(R.id.stateText);
+            this.zipText = activity.findViewById(R.id.zipText);
+        }
     }
 
     private void initializeViewModel() {
         // Initialize ViewModel
-        viewModel = ViewModelProviders.of(getActivity()).get(UserInfoViewModel.class);
-        viewModel.getStudentLiveData().observe(this, studentData -> {
-            if(studentData == null)
-                return;
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            viewModel = ViewModelProviders.of(activity).get(UserInfoViewModel.class);
+            viewModel.getStudentLiveData().observe(getViewLifecycleOwner(), studentData -> {
+                if(studentData == null)
+                    return;
 
-            studentNameText.setText(studentData.getFullName());
-            studentIdText.setText(studentData.getStudentId().toString());
-            studentEmailText.setText(studentData.getEmail());
-            studentPhoneText.setText(studentData.getPhoneFormatted());
+                studentNameText.setText(studentData.getFullName());
+                studentIdText.setText(studentData.getStudentId().toString());
+                studentEmailText.setText(studentData.getEmail());
+                studentPhoneText.setText(studentData.getPhoneFormatted());
 
-            // Address
-            addressText.setText(studentData.getAddress());
-            cityText.setText(studentData.getCity());
-            stateText.setText(studentData.getState());
-            this.zipText.setText(studentData.getZip());
-        });
+                // Address
+                addressText.setText(studentData.getAddress());
+                cityText.setText(studentData.getCity());
+                stateText.setText(studentData.getState());
+                this.zipText.setText(studentData.getZip());
+            });
+        }
     }
 
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         Log.i(LOG_TAG, "options menu being created");
         inflater.inflate(R.menu.user_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -154,10 +161,13 @@ public class UserInfoFragment extends Fragment
         App.setAuthorization(null);
         viewModel.clearStudentData();
         // End this activity
-        getActivity().finish();
-        // Start login activity
-        startActivity(
-                new Intent( getActivity().getApplicationContext(), LoginActivity.class )
-        );
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            activity.finish();
+            // Start login activity
+            startActivity(
+                    new Intent( activity.getApplicationContext(), LoginActivity.class )
+            );
+        }
     }
 }

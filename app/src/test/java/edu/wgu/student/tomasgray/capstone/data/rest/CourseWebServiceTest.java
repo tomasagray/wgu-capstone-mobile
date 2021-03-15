@@ -34,8 +34,7 @@ import java.util.stream.Stream;
 import edu.wgu.student.tomasgray.capstone.data.model.Course;
 import retrofit2.Response;
 
-public class CourseWebServiceTest
-{
+public class CourseWebServiceTest {
     private static final String LOG_TAG = "CourseWSTest";
 
     private final UUID testId = UUID.fromString("0d1905ca-62b4-4806-87cc-93a4cb450f26");
@@ -44,8 +43,7 @@ public class CourseWebServiceTest
     private static CourseWebService webService;
 
     @BeforeAll
-    static void setup()
-    {
+    static void setup() {
         webService
                 = RestClient
                 .getInstance()
@@ -54,8 +52,7 @@ public class CourseWebServiceTest
 
     @DisplayName("Get a single course and make sure it's the one we wanted")
     @Test
-    void testGetCourse()
-    {
+    void testGetCourse() {
         try {
             // Get a course
             Response<Course> response
@@ -65,20 +62,19 @@ public class CourseWebServiceTest
             // Extract response
             Course course = response.body();
             System.out.println("Retrieved course:\n" + course);
-
+            assert course != null;
             assert course.getId().compareTo(testId) == 0;
 
-        } catch (IOException e ) {
+        } catch (IOException e) {
             System.out.println("Failed getting data\n" + e.getMessage());
         }
     }
 
 
     @DisplayName("Retrieve all courses at once")
-    @ParameterizedTest(name="Testing: {index} | {0}")
+    @ParameterizedTest(name = "Testing: {index} | {0}")
     @MethodSource("getAllCourses")
-    void testGetsAllValidCourseData(Course course)
-    {
+    void testGetsAllValidCourseData(Course course) {
         System.out.println("Got course: ");
         System.out.println(course);
 
@@ -90,16 +86,15 @@ public class CourseWebServiceTest
 
 
     @Nullable
-    private static Stream<Arguments> getAllCourses()
-    {
+    private static Stream<Arguments> getAllCourses() {
         try {
             Response<List<Course>> response
                     = webService
-                        .getAllCourses(authKey)
-                        .execute();
+                    .getAllCourses(authKey)
+                    .execute();
             // Extract response
             List<Course> courses = response.body();
-
+            assert courses != null;
             return courses
                     .stream()
                     .map(Arguments::of);

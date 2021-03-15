@@ -68,7 +68,7 @@
                 app:layout_constraintStart_toStartOf="@+id/userAvatar"
                 app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
 
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/currentTermFragment"
                 android:name="edu.wgu.student.tomasgray.capstone.ui.coursework.TermDetailFragment"
                 android:layout_width="match_parent"

@@ -39,17 +39,16 @@ public class TermDetailViewModel extends AndroidViewModel
 
     // LiveData
     private LiveData<Term> term;
-    private LiveData<List<Course>> courses = new MutableLiveData<>();
+    private final LiveData<List<Course>> courses = new MutableLiveData<>();
     // Repos
-    private TermRepository termRepository;
-    private CourseRepository courseRepository;
+    private final TermRepository termRepository;
 
     public TermDetailViewModel(@NonNull Application application) {
         super(application);
 
         // Initialize repos
         this.termRepository = TermRepository.getInstance(application);
-        this.courseRepository = CourseRepository.getInstance(application);
+        CourseRepository courseRepository = CourseRepository.getInstance(application);
     }
 
     void init(UUID termId) {

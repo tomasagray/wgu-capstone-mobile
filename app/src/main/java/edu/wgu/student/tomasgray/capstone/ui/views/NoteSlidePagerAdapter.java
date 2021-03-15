@@ -60,6 +60,7 @@ public class NoteSlidePagerAdapter extends FragmentStatePagerAdapter
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         NoteFragment noteFragment

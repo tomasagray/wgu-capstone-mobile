@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,9 +33,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import edu.wgu.student.tomasgray.capstone.R;
 
 public class FacultyOverviewFragment extends Fragment {
-
-    private FacultyOverviewViewModel facultyViewModel;
-    private RecyclerView facultyList;
 
     public static FacultyOverviewFragment newInstance() {
         return new FacultyOverviewFragment();
@@ -53,21 +51,21 @@ public class FacultyOverviewFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState)
-    {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
         super.onActivityCreated(savedInstanceState);
-
         // Setup faculty list RecyclerView
-        facultyList = getActivity().findViewById(R.id.facultyList);
-        facultyList.setLayoutManager( new LinearLayoutManager(getContext()));
-        FacultyListAdapter facultyListAdapter = new FacultyListAdapter( getActivity() );
-        facultyList.setAdapter(facultyListAdapter);
-
-        // TODO: Use the ViewModel
-        facultyViewModel = ViewModelProviders.of(this).get(FacultyOverviewViewModel.class);
-        facultyViewModel.init();
-        facultyViewModel.getFaculty().observe(this, facultyListAdapter::setData);
-
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            FacultyListAdapter facultyListAdapter;
+            RecyclerView facultyList = activity.findViewById(R.id.facultyList);
+            facultyList.setLayoutManager(new LinearLayoutManager(getContext()));
+            facultyListAdapter = new FacultyListAdapter(activity);
+            facultyList.setAdapter(facultyListAdapter);
+            // TODO: Use the ViewModel
+            FacultyOverviewViewModel facultyViewModel = ViewModelProviders.of(this).get(FacultyOverviewViewModel.class);
+            facultyViewModel.init();
+            facultyViewModel.getFaculty().observe(getViewLifecycleOwner(), facultyListAdapter::setData);
+        }
     }
-
 }

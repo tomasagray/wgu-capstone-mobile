@@ -34,7 +34,7 @@ public class Converters
 {
     private static final String LOG_TAG = "Converters";
 
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
 
     // LocalDate

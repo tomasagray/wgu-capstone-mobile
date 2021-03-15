@@ -66,9 +66,9 @@ public class FacultyRepository
 
     // Fields
     // ----------------------------------------------------------------------
-    private FacultyDao facultyDao;
-    private FacultyWebService webService;
-    private Executor executor;
+    private final FacultyDao facultyDao;
+    private final FacultyWebService webService;
+    private final Executor executor;
 
     // Constructor
     // ----------------------------------------------------------------------
@@ -116,15 +116,16 @@ public class FacultyRepository
                 if(response.isSuccessful()) {
                     // Extract response
                     List<Faculty> faculty = response.body();
-                    // TODO: Error validation
-
-                    // Clear old data
-                    facultyDao.deleteAll();
-                    // Save each to local DB
-                    faculty.forEach(fac -> {
-                        Log.i(LOG_TAG, "Got faculty member from remote server: " + fac.getFacultyId());
-                        facultyDao.save(fac);
-                    });
+                    if (faculty != null) {
+                        // TODO: Error validation
+                        // Clear old data
+                        facultyDao.deleteAll();
+                        // Save each to local DB
+                        faculty.forEach(fac -> {
+                            Log.i(LOG_TAG, "Got faculty member from remote server: " + fac.getFacultyId());
+                            facultyDao.save(fac);
+                        });
+                    }
                 } else {
                     Log.e(
                             LOG_TAG,

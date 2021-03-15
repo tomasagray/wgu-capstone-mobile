@@ -35,9 +35,7 @@ public class OverviewViewModel extends AndroidViewModel
     private static final String LOG_TAG = "OverviewVM";
 
 
-    // Repos
-    private CourseRepository courseRepo;
-    private TermRepository termRepo;
+    private final TermRepository termRepo;
     // LiveData
 //    private LiveData<List<Course>> courses;
     private LiveData<Term> term;
@@ -45,7 +43,8 @@ public class OverviewViewModel extends AndroidViewModel
     public OverviewViewModel(@NonNull Application application) {
         super(application);
         // Save repo reference
-        this.courseRepo = CourseRepository.getInstance(getApplication());
+        // Repos
+        CourseRepository courseRepo = CourseRepository.getInstance(getApplication());
         this.termRepo = TermRepository.getInstance(getApplication());
     }
 

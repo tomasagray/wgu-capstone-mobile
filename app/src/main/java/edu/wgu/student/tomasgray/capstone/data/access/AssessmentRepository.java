@@ -62,9 +62,9 @@ public class AssessmentRepository
     }
 
     // Fields
-    private AssessmentDao assessmentDao;
-    private AssessmentWebService webService;
-    private Executor executor;
+    private final AssessmentDao assessmentDao;
+    private final AssessmentWebService webService;
+    private final Executor executor;
 
     // Constructor
     // --------------------------------------------------
@@ -112,8 +112,10 @@ public class AssessmentRepository
                     assessmentDao.deleteAll();
                     // Extract response
                     List<Assessment> assessments = response.body();
-                    // Save each assessment to local DB
-                    assessments.forEach(assessmentDao::save);
+                    if (assessments != null) {
+                        // Save each assessment to local DB
+                        assessments.forEach(assessmentDao::save);
+                    }
                 }
 
             } catch (IOException | RuntimeException e) {
@@ -147,10 +149,12 @@ public class AssessmentRepository
 
                 if(response.isSuccessful()) {
                     List<Assessment> assessments = response.body();
-                    assessments.forEach( (assessment) -> {
-                        Log.i(LOG_TAG, "Saving assessment: " + assessment);
-                        assessmentDao.save(assessment);
-                    });
+                    if (assessments != null) {
+                        assessments.forEach( (assessment) -> {
+                            Log.i(LOG_TAG, "Saving assessment: " + assessment);
+                            assessmentDao.save(assessment);
+                        });
+                    }
                 } else {
                     Log.e(
                             LOG_TAG,

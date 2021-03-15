@@ -32,7 +32,7 @@ import edu.wgu.student.tomasgray.capstone.R;
 
 public class ProgressButtonView extends AppCompatButton
 {
-    private static final String LOG_TAG = "ProgButtonView";
+    private static final String LOG_TAG = "ProgressButtonView";
 
 
     private int percentage;
@@ -61,10 +61,10 @@ public class ProgressButtonView extends AppCompatButton
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onSizeChanged(int w, int h, int old_w, int old_h) {
+        super.onSizeChanged(w, h, old_w, old_h);
 
-        Log.i(LOG_TAG, "Dimensions: w("+w+"), h("+h+"), oldw("+oldw+"+), oldh("+oldh+")");
+        Log.i(LOG_TAG, "Dimensions: w("+w+"), h("+h+"), old_w("+old_w+"+), old_h("+old_h+")");
         // Resize progress bar
         if(progressBar != null){
             Log.i(LOG_TAG, "Setting progress bar to: " + percentage);
@@ -93,7 +93,7 @@ public class ProgressButtonView extends AppCompatButton
         // Left of progress bar, relative to containing View,
         // minus padding
         int left = getPaddingLeft()/2;
-        // Percent of the progess bar that is filled
+        // Percent of the progress bar that is filled
         int progressWidth = (int)(getWidth() * (percent * 0.01f));
         return new Rect(left, top, progressWidth, height);
     }

@@ -102,9 +102,9 @@ public class TopicButtonAdapter extends RecyclerView.Adapter<TopicButtonAdapter.
     static class TopicViewHolder extends RecyclerView.ViewHolder
     {
         final View view;
-        TextView flagText;
-        TextView topicHeading;
-        TextView topicText;
+        final TextView flagText;
+        final TextView topicHeading;
+        final TextView topicText;
 
         TopicViewHolder(@NonNull View view) {
             super(view);

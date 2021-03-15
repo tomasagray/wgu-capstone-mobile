@@ -37,15 +37,7 @@ public class TermListViewModel extends AndroidViewModel
         super(application);
     }
 
-
-    /**
-     * Initializes the data repository for this View, and
-     * returns the number of terms returned from the repo
-     *
-     * @param termRepository
-     * @return Number of Terms retrieved
-     */
-    void init(TermRepository termRepository) {
+    void init(@NonNull TermRepository termRepository) {
         this.termList = termRepository.getTerms();
     }
 

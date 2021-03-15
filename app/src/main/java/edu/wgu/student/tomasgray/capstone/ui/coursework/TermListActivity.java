@@ -21,6 +21,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -44,8 +46,6 @@ public class TermListActivity extends AppCompatActivity
 
     // GUI
     private TermListViewModel viewModel;
-    private ViewPager termViewPager;
-    private TabLayout pagerTabs;
     private TermSlidePagerAdapter pagerAdapter;
     // Data
     private List<Term> termList;
@@ -73,8 +73,10 @@ public class TermListActivity extends AppCompatActivity
         setTitle(getResources().getString(R.string.term_detail));
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar()
-                .setDisplayHomeAsUpEnabled(true);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         // Setup
         this.viewModel = ViewModelProviders.of(this).get(TermListViewModel.class);
@@ -99,7 +101,7 @@ public class TermListActivity extends AppCompatActivity
     private void initializeGui() {
         // Setup ViewPager
         // -------------------------------------------------------------------
-        this.termViewPager = findViewById(R.id.termViewPager);
+        ViewPager termViewPager = findViewById(R.id.termViewPager);
         this.pagerAdapter = new TermSlidePagerAdapter(getSupportFragmentManager());
         termViewPager.setAdapter(pagerAdapter);
         termViewPager.setCurrentItem(0);
@@ -120,7 +122,7 @@ public class TermListActivity extends AppCompatActivity
             }
         });
         // Setup tabs
-        this.pagerTabs = findViewById(R.id.pagerTabs);
+        TabLayout pagerTabs = findViewById(R.id.pagerTabs);
         pagerTabs.setupWithViewPager(termViewPager, true);
     }
 
@@ -135,7 +137,7 @@ public class TermListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onAttachFragment(Fragment fragment)
+    public void onAttachFragment(@NonNull Fragment fragment)
     {
         // Attach to Fragment interaction events
         if(fragment instanceof TermDetailFragment) {
@@ -158,11 +160,11 @@ public class TermListActivity extends AppCompatActivity
             super(fm);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             Log.i(LOG_TAG, "Creating fragment for term: " + termList.get(position) + ", position: " + position);
-            TermDetailFragment fragment = TermDetailFragment.newFragment( termList.get(position).getTermId() );
-            return fragment;
+            return TermDetailFragment.newFragment( termList.get(position).getTermId() );
         }
 
         @Override

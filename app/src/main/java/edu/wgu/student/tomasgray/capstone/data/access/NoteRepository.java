@@ -35,24 +35,23 @@ import edu.wgu.student.tomasgray.capstone.data.rest.RestClient;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-public class NoteRepository
-{
+public class NoteRepository {
     private static final String LOG_TAG = "NoteRepo";
 
     // Singleton
     // ---------------------------------------------------------
     private static volatile NoteRepository INSTANCE;
-    public static NoteRepository getInstance(Context context)
-    {
-        if(INSTANCE == null) {
+
+    public static NoteRepository getInstance(Context context) {
+        if (INSTANCE == null) {
             NoteDao noteDao
                     = Database
-                        .getInstance(context)
-                        .noteDao();
+                    .getInstance(context)
+                    .noteDao();
             NoteWebService webService
                     = RestClient
-                        .getInstance()
-                        .create(NoteWebService.class);
+                    .getInstance()
+                    .create(NoteWebService.class);
             Executor executor
                     = Executors.newCachedThreadPool();
 
@@ -63,9 +62,9 @@ public class NoteRepository
     }
 
     // Fields
-    private NoteDao noteDao;
-    private NoteWebService webService;
-    private Executor executor;
+    private final NoteDao noteDao;
+    private final NoteWebService webService;
+    private final Executor executor;
 
     // Constructor
     private NoteRepository(NoteDao noteDao, NoteWebService webService, Executor executor) {
@@ -76,8 +75,7 @@ public class NoteRepository
 
     // Getters
     // ---------------------------------------------------------
-    public LiveData<List<Note>> getAllNotes()
-    {
+    public LiveData<List<Note>> getAllNotes() {
         Log.i(LOG_TAG, "Getting all notes");
 
         // Update local data
@@ -86,8 +84,7 @@ public class NoteRepository
         return noteDao.loadAll();
     }
 
-    public LiveData<Note> getNote(UUID noteId)
-    {
+    public LiveData<Note> getNote(UUID noteId) {
         // Refresh local DB
         refreshNoteData();
         // Fetch requested Note
@@ -96,26 +93,21 @@ public class NoteRepository
 
     // Savers
     // ---------------------------------------------------------
-    public void saveNote(@NonNull Note note)
-    {
+    public void saveNote(@NonNull Note note) {
         Log.i(LOG_TAG, "Saving new note:\n" + note);
 
         executor.execute(() -> {
             try {
                 Response<Note> response
                         = webService
-                            .saveNote(note)
-                            .execute();
+                        .saveNote(note)
+                        .execute();
 
-                if(response != null) {
-                    Log.i(
-                            LOG_TAG,
-                            "Got response from server when saving note: (c): " +
-                                    response.code() + " : " + response.toString()
-                    );
-                } else {
-                    Log.i(LOG_TAG, "Response was null");
-                }
+                Log.i(
+                        LOG_TAG,
+                        "Got response from server when saving note: (c): " +
+                                response.code() + " : " + response.toString()
+                );
             } catch (IOException | RuntimeException e) {
                 Log.e(LOG_TAG, "Caught exception: " + e.getMessage());
                 e.printStackTrace();
@@ -123,8 +115,7 @@ public class NoteRepository
         });
     }
 
-    public void updateNote(@NonNull Note note)
-    {
+    public void updateNote(@NonNull Note note) {
         Log.i(LOG_TAG, "Saving note:\n" + note);
 
         executor.execute(() -> {
@@ -135,11 +126,7 @@ public class NoteRepository
                         .updateNote(note.getNoteId(), note)
                         .execute();
 
-                if(response != null)
-                    Log.i(LOG_TAG, "Got response to update: (c)" + response.code() + " : " + response.body());
-                else {
-                    Log.i(LOG_TAG, "Response was null!");
-                }
+                Log.i(LOG_TAG, "Got response to update: (c)" + response.code() + " : " + response.body());
             } catch (IOException | RuntimeException e) {
                 Log.e(LOG_TAG, "Caught exception: " + e.getMessage());
                 e.printStackTrace();
@@ -150,28 +137,28 @@ public class NoteRepository
         refreshNoteData();
     }
 
-    private void refreshNoteData()
-    {
+    private void refreshNoteData() {
         executor.execute(() -> {
             // Prevent repeat API calls
-            if(noteDao.isDataFresh())
+            if (noteDao.isDataFresh())
                 return;
 
             try {
                 Response<List<Note>> response
                         = webService
-                            .getAllNotes()
-                            .execute();
+                        .getAllNotes()
+                        .execute();
 
                 // TODO: Error / validation
                 List<Note> notes = response.body();
+                if (notes != null && notes.size() > 0) {
+                    // Clear old data
+                    noteDao.deleteAll();
+                    // Save Notes to local DB
+                    notes.forEach(noteDao::save);
+                }
 
-                // Clear old data
-                noteDao.deleteAll();
-                // Save Notes to local DB
-                notes.forEach(noteDao::save);
-
-            } catch (IOException | RuntimeException e ) {
+            } catch (IOException | RuntimeException e) {
                 Log.e(
                         LOG_TAG,
                         "Could not update Note data from remote source" +

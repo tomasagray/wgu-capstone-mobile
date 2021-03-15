@@ -145,7 +145,7 @@ public class TermDetailFragment extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        Log.i(LOG_TAG, "Termdetailfrag activity created");
+        Log.i(LOG_TAG, "TermDetailFrag activity created");
         initializeGui();
         initializeViewModel();
     }
@@ -171,23 +171,26 @@ public class TermDetailFragment extends Fragment
     {
         // Attach GUI components
 //        termLabel = getView().findViewById(R.id.termLabel);
-        daysLeft  = getView().findViewById(R.id.daysLeftCounterText);
-        startDate = getView().findViewById(R.id.termStartDateText);
-        endDate   = getView().findViewById(R.id.termEndDateText);
-        termProgressBar = getView().findViewById(R.id.termProgressButton);
-        termProgressBar.setOnClickListener(v -> callback.onProgressButtonClick());
-        // Setup course list
-        courseListRecycler = getView().findViewById(R.id.courseListRecycler);
-        TopicButtonAdapter adapter = new TopicButtonAdapter();
-        adapter.setAdapterInteractionListener(this);
-        courseListRecycler.setAdapter( adapter );
-        courseListRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        View view = getView();
+        if (view != null) {
+            daysLeft  = view.findViewById(R.id.daysLeftCounterText);
+            startDate = view.findViewById(R.id.termStartDateText);
+            endDate   = view.findViewById(R.id.termEndDateText);
+            termProgressBar = view.findViewById(R.id.termProgressButton);
+            termProgressBar.setOnClickListener(v -> callback.onProgressButtonClick());
+            // Setup course list
+            courseListRecycler = view.findViewById(R.id.courseListRecycler);
+            TopicButtonAdapter adapter = new TopicButtonAdapter();
+            adapter.setAdapterInteractionListener(this);
+            courseListRecycler.setAdapter( adapter );
+            courseListRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
     }
 
     private void initializeViewModel()
     {
         // Observe data
-        viewModel.getTerm().observe(this, termData -> {
+        viewModel.getTerm().observe(getViewLifecycleOwner(), termData -> {
                 if(termData == null)
                     return;
                 
@@ -207,7 +210,7 @@ public class TermDetailFragment extends Fragment
                 termProgressBar.setPercentage(percent);
                 // Set courses
                 courseList = termData.getCourseList();
-                Log.i(LOG_TAG, "COurselist IS: " + courseList);
+                Log.i(LOG_TAG, "CourseList IS: " + courseList);
 
                 if(courseList != null) {
                     Log.i(LOG_TAG, "CourseList for term: " + termData.getTermId() + " has " + termData.getCourseList().size() + " entries");
@@ -216,10 +219,10 @@ public class TermDetailFragment extends Fragment
                                 .stream()
                                 .map(CourseUtils::convertToTopic)
                                 .collect(Collectors.toList());
-
-                    Log.i(LOG_TAG, "courselist SO WHY ARENT WE HERE? # = " + topicList.size());
-                    ((TopicButtonAdapter) courseListRecycler.getAdapter())
-                            .setData(topicList);
+                    TopicButtonAdapter adapter = (TopicButtonAdapter) courseListRecycler.getAdapter();
+                    if (adapter != null) {
+                        adapter.setData(topicList);
+                    }
                 } else {
                     Log.i(LOG_TAG, "CourseList is null for term: " + termData.getTermId());
                 }
@@ -231,7 +234,7 @@ public class TermDetailFragment extends Fragment
         viewModel.init(termId);
     }
 
-    private int calcTermPercent(Term term)
+    private int calcTermPercent(@NonNull Term term)
     {
         // Calculate term length
         long termLength = ChronoUnit.DAYS.between( term.getStartDate(), term.getEndDate() );

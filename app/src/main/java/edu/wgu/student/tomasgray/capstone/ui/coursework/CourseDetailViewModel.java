@@ -48,7 +48,7 @@ public class CourseDetailViewModel extends AndroidViewModel
 
     public void init(UUID courseId)
     {
-        Log.i(LOG_TAG, "initing VM with coursedeets ID: " + courseId);
+        Log.i(LOG_TAG, "initializing VM with CourseDetails ID: " + courseId);
         course = CourseRepository
                     .getInstance(getApplication())
                     .getCourse(courseId);

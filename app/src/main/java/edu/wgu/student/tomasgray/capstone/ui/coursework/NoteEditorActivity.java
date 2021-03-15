@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -45,15 +46,10 @@ public class NoteEditorActivity extends AppCompatActivity
     private static final int NEW_NOTE_MODE = 100;
     private static final int EDIT_NOTE_MODE = 101;
 
-    // ViewModel
-    private NoteViewModel viewModel;
     // Note represented by this Activity
     private Note note;
     private int editMode;
 
-    // GUI
-    private Button cancelButton;
-    private Button saveButton;
     private EditText noteText;
 
     @Override
@@ -63,7 +59,10 @@ public class NoteEditorActivity extends AppCompatActivity
         setContentView(R.layout.activity_note_editor);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         // Attach GUI references
         initializeGui();
@@ -101,19 +100,18 @@ public class NoteEditorActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                cancelEdit();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            cancelEdit();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initializeGui()
     {
-        cancelButton = findViewById(R.id.cancelNoteButton);
-        saveButton = findViewById(R.id.saveNoteButton);
+        // GUI
+        Button cancelButton = findViewById(R.id.cancelNoteButton);
+        Button saveButton = findViewById(R.id.saveNoteButton);
         noteText = findViewById(R.id.noteText);
 
         // Button handlers
@@ -125,7 +123,8 @@ public class NoteEditorActivity extends AppCompatActivity
     private void initializeViewModel(UUID noteId)
     {
         // Initialize VM
-        viewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
+        // ViewModel
+        NoteViewModel viewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
         viewModel.init(noteId);
         viewModel.getNote()
                 .observe(this, note -> {
@@ -159,9 +158,10 @@ public class NoteEditorActivity extends AppCompatActivity
             return;
         }
 
+        Note savedNote;
         if(editMode == NEW_NOTE_MODE) {
             // Create new note with random ID
-            Note savedNote = new Note( UUID.randomUUID() );
+            savedNote = new Note(UUID.randomUUID());
             savedNote.setNoteText(noteText.getText().toString());
             savedNote.setUpdateDate( LocalDate.now() );
             // Save new note
@@ -169,10 +169,9 @@ public class NoteEditorActivity extends AppCompatActivity
                     .getInstance(getApplicationContext())
                     .saveNote(savedNote);
             // Set result for calling Activity
-            setResult(RESULT_OK);
         } else {
             // EDIT_NOTE_MODE
-            Note savedNote = new Note(this.note.getNoteId());
+            savedNote = new Note(this.note.getNoteId());
             savedNote.setNoteText(noteText.getText().toString());
             savedNote.setUpdateDate(LocalDate.now());
             // Update note
@@ -181,8 +180,8 @@ public class NoteEditorActivity extends AppCompatActivity
                     .updateNote(savedNote);
 
             // Return to previous Activity
-            setResult(RESULT_OK);
         }
+        setResult(RESULT_OK);
 
         finish();
     }

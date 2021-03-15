@@ -20,6 +20,8 @@ package edu.wgu.student.tomasgray.capstone.data.rest;
 import android.util.Base64;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.security.GeneralSecurityException;
@@ -61,9 +63,9 @@ public class Authorization
     /**
      * Creates an encoded String to use as an authorization key
      *
-     * @param userName
-     * @param data
-     * @return
+     * @param userName User name of user to login
+     * @param data Other data for auth
+     * @return Encoded auth key
      */
     public static String getAuthKey(String userName, String data)
     {
@@ -93,6 +95,7 @@ public class Authorization
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return

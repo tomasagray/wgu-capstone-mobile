@@ -89,7 +89,7 @@ public class CourseRepository
         // Return data from local DB
         LiveData<Course> liveData = courseDao.load(courseId);
         liveData = Transformations.switchMap(liveData, inputCourse -> {
-            Log.i(LOG_TAG, "coursedeets InputCourse = " + inputCourse);
+            Log.i(LOG_TAG, "CourseDetails InputCourse = " + inputCourse);
             if(inputCourse == null)
                 return null;
             LiveData<Faculty> mentorLiveData = facultyRepo.getFacultyMember(inputCourse.getMentorId());
@@ -149,11 +149,13 @@ public class CourseRepository
 
                 if(response.isSuccessful()) {
                     List<Course> courses = response.body();
-                    // Save courses to DB
-                    courses.forEach((c) -> {
-                        Log.i(LOG_TAG, "Saving course: " + c);
-                        courseDao.save(c);
-                    });
+                    if (courses != null) {
+                        // Save courses to DB
+                        courses.forEach((c) -> {
+                            Log.i(LOG_TAG, "Saving course: " + c);
+                            courseDao.save(c);
+                        });
+                    }
 
                 } else {
                     Log.e(LOG_TAG, "Response from server indicated fault: " + response.code());
